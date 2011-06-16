@@ -1,0 +1,4 @@
+VCResponseFetcher
+
+A Simple library for processing different types of GET response. This is a generic library so we can add new custom processors for as many types of different services we want!
+
