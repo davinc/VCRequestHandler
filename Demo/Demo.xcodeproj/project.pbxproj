@@ -14,6 +14,9 @@
 		450ED19913A8C351008A23EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19813A8C351008A23EB /* main.m */; };
 		450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19B13A8C351008A23EB /* DemoAppDelegate.m */; };
 		450ED19F13A8C351008A23EB /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450ED19D13A8C351008A23EB /* MainWindow.xib */; };
+		45EC72E213AA7388007EA9D3 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DE13AA7388007EA9D3 /* VCImageResponseProcessor.m */; };
+		45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */; };
+		45EC72E413AA7388007EA9D3 /* VCResponseFetchServiceCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */; };
 		45F2658413A8C42800574CF0 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F2657F13A8C42800574CF0 /* VCDataResponseProcessor.m */; };
 		45F2658513A8C42800574CF0 /* VCResponseFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F2658213A8C42800574CF0 /* VCResponseFetchService.m */; };
 /* End PBXBuildFile section */
@@ -30,6 +33,11 @@
 		450ED19A13A8C351008A23EB /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		450ED19B13A8C351008A23EB /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
 		450ED19E13A8C351008A23EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		45EC72DD13AA7388007EA9D3 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
+		45EC72DE13AA7388007EA9D3 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
+		45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
+		45EC72E013AA7388007EA9D3 /* VCResponseFetchServiceCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchServiceCache.h; sourceTree = "<group>"; };
+		45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchServiceCache.m; sourceTree = "<group>"; };
 		45F2657D13A8C42800574CF0 /* VCDataProcessorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataProcessorDelegate.h; sourceTree = "<group>"; };
 		45F2657E13A8C42800574CF0 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
 		45F2657F13A8C42800574CF0 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
@@ -107,12 +115,17 @@
 			isa = PBXGroup;
 			children = (
 				45F2658013A8C42800574CF0 /* VCResponseFetcher.h */,
+				45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */,
 				45F2658313A8C42800574CF0 /* VCResponseFetchServiceDelegate.h */,
 				45F2657D13A8C42800574CF0 /* VCDataProcessorDelegate.h */,
-				45F2657E13A8C42800574CF0 /* VCDataResponseProcessor.h */,
-				45F2657F13A8C42800574CF0 /* VCDataResponseProcessor.m */,
 				45F2658113A8C42800574CF0 /* VCResponseFetchService.h */,
 				45F2658213A8C42800574CF0 /* VCResponseFetchService.m */,
+				45EC72E013AA7388007EA9D3 /* VCResponseFetchServiceCache.h */,
+				45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */,
+				45EC72DD13AA7388007EA9D3 /* VCImageResponseProcessor.h */,
+				45EC72DE13AA7388007EA9D3 /* VCImageResponseProcessor.m */,
+				45F2657E13A8C42800574CF0 /* VCDataResponseProcessor.h */,
+				45F2657F13A8C42800574CF0 /* VCDataResponseProcessor.m */,
 			);
 			name = VCResponseFetcher;
 			path = ../../VCResponseFetcher;
@@ -181,6 +194,9 @@
 				450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */,
 				45F2658413A8C42800574CF0 /* VCDataResponseProcessor.m in Sources */,
 				45F2658513A8C42800574CF0 /* VCResponseFetchService.m in Sources */,
+				45EC72E213AA7388007EA9D3 /* VCImageResponseProcessor.m in Sources */,
+				45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */,
+				45EC72E413AA7388007EA9D3 /* VCResponseFetchServiceCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

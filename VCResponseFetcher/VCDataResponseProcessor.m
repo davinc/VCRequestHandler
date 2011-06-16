@@ -34,7 +34,7 @@
 // For custom implementation override this method
 -(void)processData:(NSData*)receivedData
 {
-	data = [[NSData alloc] initWithData:receivedData];
+	self.data = [[[NSData alloc] initWithData:receivedData] autorelease];
 }
 
 @end

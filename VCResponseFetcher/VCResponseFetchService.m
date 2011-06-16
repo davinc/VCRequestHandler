@@ -17,7 +17,7 @@
 
 @implementation VCResponseFetchService
 
-@synthesize delegate, url, responseProcessor;
+@synthesize delegate, url, responseProcessor, sharedCache, cachingType;
 
 -(id)init
 {
@@ -26,6 +26,8 @@
 		self.delegate = nil;
 		self.url = nil;
 		self.responseProcessor = nil;
+		self.cachingType = VCResponseFetchRemoteIfNoCache;
+		self.sharedCache = [VCResponseFetchServiceCache sharedCache];
 	}
 	return self;
 }
@@ -39,17 +41,40 @@
 
 -(void)start
 {
+	// Starting
 	if( [self isCancelled] ) return;
 	
 	[self notifyStart];
-	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	
+		
+	// Processing
 	NSError *error = nil;
-	NSData *data = [NSData dataWithContentsOfURL:url
-										 options:NSDataReadingMapped
-										   error:&error];
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	NSData *data = nil;
+	if (self.cachingType != VCResponseFetchNoCache) 
+	{
+		if ([self.sharedCache isCachedDataAvailableForUrl:self.url]) 
+		{
+			data = [self.sharedCache cachedDataForUrl:self.url];
+		}
+	}
+
+	if (self.cachingType != VCResponseFetchOnlyCache && data == nil) 
+	{
+		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+		data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]
+									 options:NSDataReadingMapped
+									   error:&error];
+		[self.sharedCache saveData:data forUrl:self.url];
+		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	}
+	else if (data == nil)
+	{
+		// error
+		error = [NSError errorWithDomain:@""
+									code:404
+								userInfo:nil];
+	}
+	
+	// Ending
 	
 	if( [self isCancelled] ) return;
 	
@@ -70,7 +95,8 @@
 
 -(void)didFinish
 {
-	if ([self.delegate respondsToSelector:@selector(didSucceedReceiveResponse:)]) {
+	if ([self.delegate respondsToSelector:@selector(didSucceedReceiveResponse:)]) 
+	{
 		[self.delegate performSelectorOnMainThread:@selector(didSucceedReceiveResponse:)
 										withObject:self.responseProcessor
 									 waitUntilDone:YES];
@@ -80,7 +106,8 @@
 -(void)didFail:(NSError *)error
 {
 	[self.responseProcessor setError:error];
-	if ([self.delegate respondsToSelector:@selector(didFailReceiveResponse:)]) {
+	if ([self.delegate respondsToSelector:@selector(didFailReceiveResponse:)])
+	{
 		[self.delegate performSelectorOnMainThread:@selector(didFailReceiveResponse:)
 										withObject:self.responseProcessor
 									 waitUntilDone:YES];
@@ -118,4 +145,5 @@
 {
 	return finished;
 }
+
 @end

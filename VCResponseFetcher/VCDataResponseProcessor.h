@@ -11,8 +11,6 @@
 #import "VCDataProcessorDelegate.h"
 
 @interface VCDataResponseProcessor : NSObject <VCDataProcessorDelegate> {
-	NSData *data;
-	NSError *error;
 }
 @property (nonatomic, retain) NSData *data;
 @property (nonatomic, retain) NSError *error;

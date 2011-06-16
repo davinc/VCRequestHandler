@@ -12,6 +12,8 @@
 
 
 @synthesize window=_window;
+@synthesize responseTextView = _responseTextView;
+@synthesize responseImageView = _responseImageView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -62,7 +64,67 @@
 - (void)dealloc
 {
 	[_window release];
+    [_responseTextView release];
+    [_responseImageView release];
     [super dealloc];
+}
+
+
+
+
+
+#pragma mark - Action Methods
+
+- (IBAction)didTapGetGoogleResponseButton:(id)sender {
+	self.responseTextView.text = [NSString string];
+	
+	[[VCResponseFetcher sharedInstance] addObserver:self 
+												url:@"http://www.google.com"
+									responseOfClass:[VCDataResponseProcessor class]];
+}
+
+- (IBAction)didTapGetImageResponseButton:(UIButton*)sender {
+	self.responseImageView.image = nil;
+	
+	NSString *url = nil;
+	switch (sender.tag) {
+		case 0:
+			url = [NSString stringWithString:@"http://images.apple.com/home/images/promo_ios5.png"];
+			break;
+		case 1:
+			url = [NSString stringWithString:@"http://images.apple.com/home/images/promo_lion.png"];
+			break;
+	}
+	
+	[[VCResponseFetcher sharedInstance] addObserver:self 
+												url:url
+									responseOfClass:[VCImageResponseProcessor class]];
+}
+
+
+
+
+#pragma mark - VCResponseFetchServiceDelegate Methods
+
+-(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+	
+	if ([response isKindOfClass:[VCDataResponseProcessor class]] ) {
+		self.responseTextView.textColor = [UIColor blackColor];
+		VCDataResponseProcessor *processor = (VCDataResponseProcessor*)response;
+		NSString *stringResponse = [[NSString alloc] initWithData:processor.data encoding:NSUTF8StringEncoding];
+		self.responseTextView.text = stringResponse;
+		[stringResponse release];
+	}
+	else if([response isKindOfClass:[VCImageResponseProcessor class]]) {
+		VCImageResponseProcessor *processor = (VCImageResponseProcessor *)response;
+		self.responseImageView.image = processor.image;
+	}
+}
+
+-(void)didFailReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+	self.responseTextView.textColor = [UIColor redColor];
+
+	self.responseTextView.text = [NSString stringWithFormat:@"%@", [[response error]localizedDescription]];
 }
 
 @end
