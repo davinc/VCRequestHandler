@@ -27,5 +27,6 @@
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 				url:(NSString*)url
 	responseOfClass:(Class)respose;
+- (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;
 
 @end

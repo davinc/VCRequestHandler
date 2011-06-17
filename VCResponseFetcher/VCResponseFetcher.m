@@ -43,13 +43,24 @@
 				url:(NSString*)url
 	responseOfClass:(Class)respose 
 {
+	[self removeObserver:observer];
 	
 	VCResponseFetchService *operation = [[[VCResponseFetchService alloc] init] autorelease];
 	operation.delegate = observer;
 	operation.url = url;
 	operation.responseProcessor = [[[respose alloc] init] autorelease];
-//	operation.cachingType = VCResponseFetchNoCache;
+	operation.cachingType = VCResponseFetchNoCache;
 	
 	[_operationQueue addOperation:operation];
 }
+
+- (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer 
+{
+	for (VCResponseFetchService *operation in [_operationQueue operations]) {
+		if (operation.delegate == observer) {
+			[operation cancel];
+		}
+	}
+}
+
 @end
