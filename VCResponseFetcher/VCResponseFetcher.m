@@ -17,6 +17,7 @@
 	if (self) 
 	{
 		_operationQueue = [[NSOperationQueue alloc] init];
+		[_operationQueue setMaxConcurrentOperationCount:3];
 	}
 	return self;
 }
@@ -41,15 +42,14 @@
 
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 				url:(NSString*)url
-	responseOfClass:(Class)respose 
-{
-	[self removeObserver:observer];
-	
+			  cache:(VCResponseFetchCaching)cache
+  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor
+{	
 	VCResponseFetchService *operation = [[[VCResponseFetchService alloc] init] autorelease];
 	operation.delegate = observer;
 	operation.url = url;
-	operation.responseProcessor = [[[respose alloc] init] autorelease];
-	operation.cachingType = VCResponseFetchNoCache;
+	operation.responseProcessor = processor;
+	operation.cachingType = cache;
 	
 	[_operationQueue addOperation:operation];
 }

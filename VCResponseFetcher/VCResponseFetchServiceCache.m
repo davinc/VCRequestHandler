@@ -99,7 +99,7 @@
 		if ([fm fileExistsAtPath:filePath]) {		
 			data = [NSData dataWithContentsOfFile:filePath];
 			if ([memoryCache count] > 10) {
-				[self clearCache:NO];
+//				[self clearCache:NO];
 			}
 			[memoryCache setObject:data forKey:key];			
 		}

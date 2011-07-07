@@ -8,6 +8,9 @@
 
 #import "DemoAppDelegate.h"
 
+#import "VCDataResponseProcessor.h"
+#import "VCImageResponseProcessor.h"
+
 @implementation DemoAppDelegate
 
 
@@ -78,9 +81,10 @@
 - (IBAction)didTapGetGoogleResponseButton:(id)sender {
 	self.responseTextView.text = [NSString string];
 	
-	[[VCResponseFetcher sharedInstance] addObserver:self 
+	[[VCResponseFetcher sharedInstance] addObserver:self
 												url:@"http://www.google.com"
-									responseOfClass:[VCDataResponseProcessor class]];
+											  cache:VCResponseFetchNoCache
+								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
 }
 
 - (IBAction)didTapGetImageResponseButton:(UIButton*)sender {
@@ -98,7 +102,8 @@
 	
 	[[VCResponseFetcher sharedInstance] addObserver:self 
 												url:url
-									responseOfClass:[VCImageResponseProcessor class]];
+											  cache:VCResponseFetchRemoteIfNoCache
+								  responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
 }
 
 

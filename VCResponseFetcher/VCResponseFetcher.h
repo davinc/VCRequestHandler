@@ -13,10 +13,6 @@
 #import "VCDataProcessorDelegate.h"
 #import "VCResponseFetchServiceDelegate.h"
 
-// Devived Classes
-#import "VCDataResponseProcessor.h"
-#import "VCImageResponseProcessor.h"
-
 @interface VCResponseFetcher : NSObject {
 @private
     NSOperationQueue *_operationQueue;
@@ -26,7 +22,9 @@
 
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 				url:(NSString*)url
-	responseOfClass:(Class)respose;
+			  cache:(VCResponseFetchCaching)cache
+  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
+
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;
 
 @end
