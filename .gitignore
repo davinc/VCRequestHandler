@@ -1,8 +1,9 @@
 
-ise
+# Noise
 *.mode1v3
 *.pbxuser
 *.perspective 
+*.xcuserstate
 *.perspectivev3
 *.pyc 
 *~.nib/
