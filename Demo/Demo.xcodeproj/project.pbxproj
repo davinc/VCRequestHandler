@@ -14,6 +14,7 @@
 		450ED19913A8C351008A23EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19813A8C351008A23EB /* main.m */; };
 		450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19B13A8C351008A23EB /* DemoAppDelegate.m */; };
 		450ED19F13A8C351008A23EB /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450ED19D13A8C351008A23EB /* MainWindow.xib */; };
+		453C6EB413C770FF000AAC33 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 453C6EB313C770FF000AAC33 /* README */; };
 		45EC72E213AA7388007EA9D3 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DE13AA7388007EA9D3 /* VCImageResponseProcessor.m */; };
 		45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */; };
 		45EC72E413AA7388007EA9D3 /* VCResponseFetchServiceCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */; };
@@ -33,6 +34,7 @@
 		450ED19A13A8C351008A23EB /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		450ED19B13A8C351008A23EB /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
 		450ED19E13A8C351008A23EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		453C6EB313C770FF000AAC33 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = ../README; sourceTree = "<group>"; };
 		45EC72DD13AA7388007EA9D3 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
 		45EC72DE13AA7388007EA9D3 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
 		45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		450ED17C13A8C351008A23EB = {
 			isa = PBXGroup;
 			children = (
+				453C6EB313C770FF000AAC33 /* README */,
 				450ED19113A8C351008A23EB /* Demo */,
 				450ED18A13A8C351008A23EB /* Frameworks */,
 				450ED18813A8C351008A23EB /* Products */,
@@ -180,6 +183,7 @@
 			files = (
 				450ED19613A8C351008A23EB /* InfoPlist.strings in Resources */,
 				450ED19F13A8C351008A23EB /* MainWindow.xib in Resources */,
+				453C6EB413C770FF000AAC33 /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
