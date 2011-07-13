@@ -15,7 +15,8 @@
 
 @interface VCResponseFetcher : NSObject {
 @private
-    NSOperationQueue *_operationQueue;
+    NSOperationQueue *_networkOperationQueue;
+	NSOperationQueue *_localOperationQueue;
 }
 
 +(VCResponseFetcher*)sharedInstance;

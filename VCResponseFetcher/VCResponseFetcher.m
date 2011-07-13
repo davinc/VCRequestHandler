@@ -8,6 +8,7 @@
 
 #import "VCResponseFetcher.h"
 
+#import "VCResponseFetchServiceCache.h"
 
 @implementation VCResponseFetcher
 
@@ -16,15 +17,17 @@
 	self = [super init];
 	if (self) 
 	{
-		_operationQueue = [[NSOperationQueue alloc] init];
-		[_operationQueue setMaxConcurrentOperationCount:3];
+		_networkOperationQueue = [[NSOperationQueue alloc] init];
+		[_networkOperationQueue setMaxConcurrentOperationCount:3];
+		_localOperationQueue = [[NSOperationQueue alloc] init];
 	}
 	return self;
 }
 
 - (void)dealloc 
 {
-	[_operationQueue release], _operationQueue = nil;
+	[_networkOperationQueue release], _networkOperationQueue = nil;
+	[_localOperationQueue release], _localOperationQueue = nil;
 	[super dealloc];
 }
 
@@ -51,16 +54,24 @@
 	operation.responseProcessor = processor;
 	operation.cachingType = cache;
 	
-	[_operationQueue addOperation:operation];
+	if (cache != VCResponseFetchNoCache && [[VCResponseFetchServiceCache sharedCache] isCachedDataAvailableForUrl:url]) {
+		[_localOperationQueue addOperation:operation];
+	}else {
+		[_networkOperationQueue addOperation:operation];
+	}
+	
+	NSLog(@"operationCount : %i", [_networkOperationQueue operationCount]);
 }
 
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer 
 {
-	for (VCResponseFetchService *operation in [_operationQueue operations]) {
+	for (VCResponseFetchService *operation in [_networkOperationQueue operations]) {
 		if (operation.delegate == observer) {
 			[operation cancel];
+			operation.delegate = nil;
 		}
 	}
+	NSLog(@"operationCount : %i", [_networkOperationQueue operationCount]);
 }
 
 @end

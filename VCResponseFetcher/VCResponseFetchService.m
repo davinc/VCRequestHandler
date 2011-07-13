@@ -41,10 +41,16 @@
 
 -(void)start
 {
-	if (self.url == nil) return;
+	if (self.url == nil) {
+		[self notifyFinish];
+		return;	
+	}
 	
 	// Starting
-	if( [self isCancelled] ) return;
+	if( [self isCancelled] ) {
+		[self notifyFinish];
+		return;	
+	}
 	
 	[self notifyStart];
 	
