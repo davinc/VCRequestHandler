@@ -41,11 +41,13 @@
 
 -(void)start
 {
+	if (self.url == nil) return;
+	
 	// Starting
 	if( [self isCancelled] ) return;
 	
 	[self notifyStart];
-		
+	
 	// Processing
 	NSError *error = nil;
 	NSData *data = nil;
@@ -55,6 +57,11 @@
 		{
 			data = [self.sharedCache cachedDataForUrl:self.url];
 		}
+	}
+	
+	if( [self isCancelled] ) {
+		[self notifyFinish];
+		return;	
 	}
 
 	if (self.cachingType != VCResponseFetchOnlyCache && data == nil) 
@@ -76,7 +83,10 @@
 	
 	// Ending
 	
-	if( [self isCancelled] ) return;
+	if( [self isCancelled] ) {
+		[self notifyFinish];
+		return;	
+	}
 	
 	if (error) 
 	{
