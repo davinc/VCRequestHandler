@@ -41,14 +41,18 @@
 
 -(void)start
 {
+	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
+	
 	if (self.url == nil) {
 		[self notifyFinish];
+		[autoreleasePool release], autoreleasePool = nil;
 		return;	
 	}
 	
 	// Starting
 	if( [self isCancelled] ) {
 		[self notifyFinish];
+		[autoreleasePool release], autoreleasePool = nil;
 		return;	
 	}
 	
@@ -67,15 +71,16 @@
 	
 	if( [self isCancelled] ) {
 		[self notifyFinish];
+		[autoreleasePool release], autoreleasePool = nil;
 		return;	
 	}
 
 	if (self.cachingType != VCResponseFetchOnlyCache && data == nil) 
 	{
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]
-									 options:NSDataReadingMapped
-									   error:&error];
+		data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]];
+//									 options:NSDataReadingMapped
+//									   error:&error];
 		[self.sharedCache saveData:data forUrl:self.url];
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	}
@@ -91,6 +96,7 @@
 	
 	if( [self isCancelled] ) {
 		[self notifyFinish];
+		[autoreleasePool release], autoreleasePool = nil;
 		return;	
 	}
 	
@@ -105,6 +111,7 @@
 	}
 	
 	[self notifyFinish];
+	[autoreleasePool release], autoreleasePool = nil;
 }
 
 #pragma mark - Private Methods
@@ -115,7 +122,7 @@
 	{
 		[self.delegate performSelectorOnMainThread:@selector(didSucceedReceiveResponse:)
 										withObject:self.responseProcessor
-									 waitUntilDone:YES];
+									 waitUntilDone:NO];
 	}
 }
 
@@ -126,7 +133,7 @@
 	{
 		[self.delegate performSelectorOnMainThread:@selector(didFailReceiveResponse:)
 										withObject:self.responseProcessor
-									 waitUntilDone:YES];
+									 waitUntilDone:NO];
 	}
 }
 
@@ -134,6 +141,7 @@
 {
 	[self willChangeValueForKey:@"isExecuting"];
 	executing = YES;
+	finished = NO;
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
@@ -149,7 +157,7 @@
 
 -(BOOL)isConcurrent
 {
-	return YES;
+	return NO;
 }
 
 -(BOOL)isExecuting
