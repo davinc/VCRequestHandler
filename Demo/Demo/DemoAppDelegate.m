@@ -83,7 +83,7 @@
 	
 	[[VCResponseFetcher sharedInstance] addObserver:self
 												url:@"http://www.google.com"
-											  cache:VCResponseFetchNoCache
+											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
 }
 
@@ -93,7 +93,7 @@
 	NSString *url = nil;
 	switch (sender.tag) {
 		case 0:
-			url = [NSString stringWithString:@"http://images.apple.com/home/images/promo_ios5.png"];
+			url = [NSString stringWithString:@"http://images.apple.com/macbookair/images/overview_hero_gallery_overview.png"];
 			break;
 		case 1:
 			url = [NSString stringWithString:@"http://images.apple.com/home/images/promo_lion.png"];
@@ -102,7 +102,7 @@
 	
 	[[VCResponseFetcher sharedInstance] addObserver:self 
 												url:url
-											  cache:VCResponseFetchRemoteIfNoCache
+											  cache:NSURLRequestReturnCacheDataElseLoad
 								  responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
 }
 

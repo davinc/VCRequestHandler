@@ -18,7 +18,6 @@
 		45E41EFE13C77B1B0065B768 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E41EFB13C77B1B0065B768 /* VCDataResponseProcessor.m */; };
 		45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */; };
 		45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */; };
-		45EC72E413AA7388007EA9D3 /* VCResponseFetchServiceCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */; };
 		45F2658513A8C42800574CF0 /* VCResponseFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F2658213A8C42800574CF0 /* VCResponseFetchService.m */; };
 /* End PBXBuildFile section */
 
@@ -40,8 +39,6 @@
 		45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
 		45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
 		45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
-		45EC72E013AA7388007EA9D3 /* VCResponseFetchServiceCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchServiceCache.h; sourceTree = "<group>"; };
-		45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchServiceCache.m; sourceTree = "<group>"; };
 		45F2657D13A8C42800574CF0 /* VCDataProcessorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataProcessorDelegate.h; sourceTree = "<group>"; };
 		45F2658013A8C42800574CF0 /* VCResponseFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetcher.h; sourceTree = "<group>"; };
 		45F2658113A8C42800574CF0 /* VCResponseFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchService.h; sourceTree = "<group>"; };
@@ -136,8 +133,6 @@
 				45F2657D13A8C42800574CF0 /* VCDataProcessorDelegate.h */,
 				45F2658113A8C42800574CF0 /* VCResponseFetchService.h */,
 				45F2658213A8C42800574CF0 /* VCResponseFetchService.m */,
-				45EC72E013AA7388007EA9D3 /* VCResponseFetchServiceCache.h */,
-				45EC72E113AA7388007EA9D3 /* VCResponseFetchServiceCache.m */,
 			);
 			name = VCResponseFetcher;
 			path = ../../VCResponseFetcher;
@@ -207,7 +202,6 @@
 				450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */,
 				45F2658513A8C42800574CF0 /* VCResponseFetchService.m in Sources */,
 				45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */,
-				45EC72E413AA7388007EA9D3 /* VCResponseFetchServiceCache.m in Sources */,
 				45E41EFE13C77B1B0065B768 /* VCDataResponseProcessor.m in Sources */,
 				45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */,
 			);

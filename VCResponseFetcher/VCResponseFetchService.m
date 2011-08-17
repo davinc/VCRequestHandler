@@ -17,7 +17,7 @@
 
 @implementation VCResponseFetchService
 
-@synthesize delegate, url, responseProcessor, sharedCache, cachingType;
+@synthesize delegate, url, responseProcessor, cachePolicy;
 
 -(id)init
 {
@@ -26,8 +26,7 @@
 		self.delegate = nil;
 		self.url = nil;
 		self.responseProcessor = nil;
-		self.cachingType = VCResponseFetchRemoteIfNoCache;
-		self.sharedCache = [VCResponseFetchServiceCache sharedCache];
+		self.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
 	}
 	return self;
 }
@@ -59,41 +58,35 @@
 	[self notifyStart];
 	
 	// Processing
-	NSError *error = nil;
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
+														   cachePolicy:self.cachePolicy
+													   timeoutInterval:30];
+	NSHTTPURLResponse *resposne = nil;
 	NSData *data = nil;
-	if (self.cachingType != VCResponseFetchNoCache) 
-	{
-		if ([self.sharedCache isCachedDataAvailableForUrl:self.url]) 
-		{
-			data = [self.sharedCache cachedDataForUrl:self.url];
-		}
-	}
+	NSError *error = nil;
 	
-	if( [self isCancelled] ) {
-		[self notifyFinish];
-		[autoreleasePool release], autoreleasePool = nil;
-		return;	
+	NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
+	if (cachedResponse) {
+		data = [cachedResponse data];
+		resposne = [cachedResponse response];
 	}
 
-	if (self.cachingType != VCResponseFetchOnlyCache && data == nil) 
+	if (data == nil) 
 	{
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.url]];
-//									 options:NSDataReadingMapped
-//									   error:&error];
-		[self.sharedCache saveData:data forUrl:self.url];
+		data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resposne error:&error];
+		if (error == nil && data != nil) {
+			NSLog(@"%@", [resposne allHeaderFields]);
+			NSLog(@"currentMemoryUsage : %i", [[NSURLCache sharedURLCache] currentMemoryUsage]);
+			[[NSURLCache sharedURLCache] storeCachedResponse:[[[NSCachedURLResponse alloc]initWithResponse:resposne 
+																									  data:data]autorelease]
+												  forRequest:request];
+			NSLog(@"currentMemoryUsage : %i", [[NSURLCache sharedURLCache] currentMemoryUsage]);
+		}
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	}
-	else if (data == nil)
-	{
-		// error
-		error = [NSError errorWithDomain:@""
-									code:404
-								userInfo:nil];
-	}
-	
+
 	// Ending
-	
 	if( [self isCancelled] ) {
 		[self notifyFinish];
 		[autoreleasePool release], autoreleasePool = nil;

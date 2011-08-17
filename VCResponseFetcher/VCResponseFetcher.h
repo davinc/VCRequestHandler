@@ -23,7 +23,7 @@
 
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 				url:(NSString*)url
-			  cache:(VCResponseFetchCaching)cache
+			  cache:(NSURLRequestCachePolicy)cache
   responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
 
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;

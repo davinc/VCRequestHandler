@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "VCResponseFetchServiceDelegate.h"
 #import "VCDataProcessorDelegate.h"
-#import "VCResponseFetchServiceCache.h"
 
 @interface VCResponseFetchService : NSOperation {
 	BOOL executing;
@@ -19,8 +18,6 @@
 @property (nonatomic, assign) NSObject<VCResponseFetchServiceDelegate> *delegate;
 @property (nonatomic, retain) NSObject<VCDataProcessorDelegate> *responseProcessor;
 @property (nonatomic, retain) NSString *url;
-
-@property (nonatomic, assign) VCResponseFetchServiceCache *sharedCache;
-@property (nonatomic, assign) VCResponseFetchCaching cachingType;
+@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 
 @end
