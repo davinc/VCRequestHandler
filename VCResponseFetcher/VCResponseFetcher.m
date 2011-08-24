@@ -60,9 +60,30 @@
 	}else {
 		[_networkOperationQueue addOperation:operation];
 	}
-#if DEBUG	
-	NSLog(@"operationCount : %i", [_networkOperationQueue operationCount]);
-#endif
+}
+
+- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
+			 method:(NSString*)method
+				url:(NSString*)url
+	allHeaderFields:(NSDictionary*)allHeaderFields
+			   body:(NSData*)body
+			  cache:(NSURLRequestCachePolicy)cache
+  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor
+{
+	VCResponseFetchService *operation = [[[VCResponseFetchService alloc] init] autorelease];
+	operation.delegate = observer;
+	operation.method = method;
+	operation.url = url;
+	operation.allHTTPHeaderFields = allHeaderFields;
+	operation.body = body;
+	operation.responseProcessor = processor;
+	operation.cachePolicy = cache;
+	
+	if (cache != NSURLRequestReturnCacheDataElseLoad) {
+		[_localOperationQueue addOperation:operation];
+	}else {
+		[_networkOperationQueue addOperation:operation];
+	}
 }
 
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer 
@@ -73,9 +94,6 @@
 			operation.delegate = nil;
 		}
 	}
-#if DEBUG
-	NSLog(@"operationCount : %i", [_networkOperationQueue operationCount]);
-#endif
 }
 
 @end

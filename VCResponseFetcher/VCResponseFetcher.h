@@ -26,6 +26,14 @@
 			  cache:(NSURLRequestCachePolicy)cache
   responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
 
+- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
+			 method:(NSString*)method
+				url:(NSString*)url
+	allHeaderFields:(NSDictionary*)allHeaderFields
+			   body:(NSData*)body
+			  cache:(NSURLRequestCachePolicy)cache
+  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
+
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;
 
 @end

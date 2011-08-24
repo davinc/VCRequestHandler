@@ -17,7 +17,7 @@
 
 @implementation VCResponseFetchService
 
-@synthesize delegate, url, responseProcessor, cachePolicy;
+@synthesize delegate, url, responseProcessor, cachePolicy, allHTTPHeaderFields, body, method;
 
 -(id)init
 {
@@ -27,6 +27,7 @@
 		self.url = nil;
 		self.responseProcessor = nil;
 		self.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+		self.allHTTPHeaderFields = nil;
 	}
 	return self;
 }
@@ -35,64 +36,59 @@
 {
 	[url release], url = nil;
 	[responseProcessor release], responseProcessor = nil;
+	[allHTTPHeaderFields release], allHTTPHeaderFields = nil;
+	[body release], body = nil;
+	[method release], method = nil;
 	[super dealloc];
 }
 
 -(void)start
 {
-	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
-	
 	if (self.url == nil) {
 		[self notifyFinish];
-		[autoreleasePool release], autoreleasePool = nil;
 		return;	
 	}
-	
-	// Starting
-	if( [self isCancelled] ) {
-		[self notifyFinish];
-		[autoreleasePool release], autoreleasePool = nil;
-		return;	
-	}
-	
+
+	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
 	[self notifyStart];
 	
-	// Processing
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
 														   cachePolicy:self.cachePolicy
 													   timeoutInterval:30];
 	NSHTTPURLResponse *resposne = nil;
 	NSData *data = nil;
 	NSError *error = nil;
+
+	if (self.method) {
+		[request setHTTPMethod:self.method];
+	}
+	if (self.allHTTPHeaderFields) {
+		[request setAllHTTPHeaderFields:self.allHTTPHeaderFields];
+	}
+	if (self.body) {
+		[request setHTTPBody:self.body];
+	}
 	
 	NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
 	if (cachedResponse) {
 		data = [cachedResponse data];
-		resposne = [cachedResponse response];
+		resposne = (NSHTTPURLResponse *)[cachedResponse response];
 	}
 
 	if (data == nil) 
 	{
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		data = [NSURLConnection sendSynchronousRequest:request returningResponse:&resposne error:&error];
+		data = [NSURLConnection sendSynchronousRequest:request 
+									 returningResponse:&resposne 
+												 error:&error];
 		if (error == nil && data != nil) {
-			NSLog(@"%@", [resposne allHeaderFields]);
-			NSLog(@"currentMemoryUsage : %i", [[NSURLCache sharedURLCache] currentMemoryUsage]);
 			[[NSURLCache sharedURLCache] storeCachedResponse:[[[NSCachedURLResponse alloc]initWithResponse:resposne 
 																									  data:data]autorelease]
 												  forRequest:request];
-			NSLog(@"currentMemoryUsage : %i", [[NSURLCache sharedURLCache] currentMemoryUsage]);
 		}
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	}
 
-	// Ending
-	if( [self isCancelled] ) {
-		[self notifyFinish];
-		[autoreleasePool release], autoreleasePool = nil;
-		return;	
-	}
-	
 	if (error) 
 	{
 		[self didFail:error];
