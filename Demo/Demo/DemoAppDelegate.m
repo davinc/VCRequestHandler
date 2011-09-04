@@ -99,17 +99,17 @@
 - (IBAction)didTapGetGoogleResponseButton:(id)sender {
 	self.responseTextView.text = [NSString string];
 	
-//	[[VCResponseFetcher sharedInstance] addObserver:self
-//												url:@"http://www.google.com"
-//											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-//								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
 	[[VCResponseFetcher sharedInstance] addObserver:self
-											 method:[NSString stringWithString:@"POST"] 
-												url:@"http://posttestserver.com/post.php"
-									allHeaderFields:[NSDictionary dictionaryWithObjectsAndKeys:@"UTF8", @"Content-Type", nil]
-											   body:[[NSString stringWithString:@"\r\nTESTING DATA\r\n"] dataUsingEncoding:NSUTF8StringEncoding]
+												url:@"http://www.google.com"
 											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
+//	[[VCResponseFetcher sharedInstance] addObserver:self
+//											 method:[NSString stringWithString:@"POST"] 
+//												url:@"http://posttestserver.com/post.php"
+//									allHeaderFields:[NSDictionary dictionaryWithObjectsAndKeys:@"UTF8", @"Content-Type", nil]
+//											   body:[[NSString stringWithString:@"\r\nTESTING DATA\r\n"] dataUsingEncoding:NSUTF8StringEncoding]
+//											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+//								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
 }
 
 - (IBAction)didTapGetImageResponseButton:(UIButton*)sender {

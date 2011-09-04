@@ -1,8 +1,8 @@
 //
-//  CGResponseFetchService.m
+//  VCResponseFetchAsyncService.m
 //  VCResponseFetcherTest
 //
-//  Created by Vinay Chavan on 4/7/11.
+//  Created by Vinay Chavan on 04/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,16 +24,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VCResponseFetchService.h"
+#import "VCResponseFetchAsyncService.h"
 
-@interface VCResponseFetchService()
+@interface VCResponseFetchAsyncService()
 -(void)didFinish;
 -(void)didFail:(NSError *)error;
 -(void)notifyStart;
 -(void)notifyFinish;
 @end
 
-@implementation VCResponseFetchService
+@implementation VCResponseFetchAsyncService
 
 @synthesize delegate, url, responseProcessor, cachePolicy, allHTTPHeaderFields, body, method;
 
@@ -66,17 +66,13 @@
 		[self notifyFinish];
 		return;	
 	}
-
-	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
+	
 	[self notifyStart];
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
 														   cachePolicy:self.cachePolicy
 													   timeoutInterval:30];
-	NSHTTPURLResponse *resposne = nil;
-	NSData *data = nil;
-	NSError *error = nil;
-
+	
 	if (self.method) {
 		[request setHTTPMethod:self.method];
 	}
@@ -86,39 +82,15 @@
 	if (self.body) {
 		[request setHTTPBody:self.body];
 	}
-	
-	NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
-	if (cachedResponse) {
-		data = [cachedResponse data];
-		resposne = (NSHTTPURLResponse *)[cachedResponse response];
-	}
 
-	if (data == nil) 
-	{
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		data = [NSURLConnection sendSynchronousRequest:request 
-									 returningResponse:&resposne 
-												 error:&error];
-		if (error == nil && data != nil) {
-			[[NSURLCache sharedURLCache] storeCachedResponse:[[[NSCachedURLResponse alloc]initWithResponse:resposne 
-																									  data:data]autorelease]
-												  forRequest:request];
-		}
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	}
-
-	if (error) 
-	{
-		[self didFail:error];
-	}
-	else 
-	{
-		[self.responseProcessor processData:data];
-		[self didFinish];
-	}
+	NSURLConnection *connection = [NSURLConnection connectionWithRequest:request
+																delegate:self];
+	[connection start];
 	
-	[self notifyFinish];
-	[autoreleasePool release], autoreleasePool = nil;
+	do {
+		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode 
+								 beforeDate:[NSDate distantFuture]];
+	} while (executing);
 }
 
 #pragma mark - Private Methods
@@ -164,7 +136,7 @@
 
 -(BOOL)isConcurrent
 {
-	return NO;
+	return YES;
 }
 
 -(BOOL)isExecuting
@@ -175,6 +147,59 @@
 -(BOOL)isFinished
 {
 	return finished;
+}
+
+
+#pragma mark - NSOperationDelegate Methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+	if (self.isCancelled) {
+		[self didFail:nil];
+		[self notifyFinish];
+		return;
+	}
+	
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData
+{
+	if (self.isCancelled) {
+		[self didFail:nil];
+		[self notifyFinish];
+		return;
+	}
+	
+	if (data == nil) {
+		data = [[NSMutableData alloc] init];
+	}
+	
+	[data appendData:receivedData];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+	if (self.isCancelled) {
+		[self didFail:nil];
+		[self notifyFinish];
+		return;
+	}
+
+	[self.responseProcessor processData:data];
+	[self didFinish];
+	[self notifyFinish];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+	if (self.isCancelled) {
+		[self didFail:nil];
+		[self notifyFinish];
+		return;
+	}
+
+	[self didFail:error];
+	[self notifyFinish];
 }
 
 @end

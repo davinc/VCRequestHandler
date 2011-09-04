@@ -67,7 +67,7 @@
 			  cache:(NSURLRequestCachePolicy)cache
   responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor
 {
-	VCResponseFetchSyncService *operation = [[[VCResponseFetchSyncService alloc] init] autorelease];
+	VCResponseFetchAsyncService *operation = [[[VCResponseFetchAsyncService alloc] init] autorelease];
 	operation.delegate = observer;
 	operation.url = url;
 	operation.responseProcessor = processor;
@@ -88,7 +88,7 @@
 			  cache:(NSURLRequestCachePolicy)cache
   responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor
 {
-	VCResponseFetchSyncService *operation = [[[VCResponseFetchSyncService alloc] init] autorelease];
+	VCResponseFetchAsyncService *operation = [[[VCResponseFetchAsyncService alloc] init] autorelease];
 	operation.delegate = observer;
 	operation.method = method;
 	operation.url = url;

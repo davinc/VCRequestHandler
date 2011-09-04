@@ -1,8 +1,8 @@
 //
-//  CGResponseFetchService.h
+//  VCResponseFetchAsyncService.h
 //  VCResponseFetcherTest
 //
-//  Created by Vinay Chavan on 4/7/11.
+//  Created by Vinay Chavan on 04/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -28,7 +28,7 @@
 #import "VCResponseFetchServiceDelegate.h"
 #import "VCDataProcessorDelegate.h"
 
-@interface VCResponseFetchService : NSOperation {
+@interface VCResponseFetchAsyncService : NSOperation {
 	NSObject<VCResponseFetchServiceDelegate> *delegate;
 	NSObject<VCDataProcessorDelegate> *responseProcessor;
 	NSString *url;
@@ -36,7 +36,8 @@
 	NSString *method;
 	NSDictionary *allHTTPHeaderFields;
 	NSData *body;
-
+	NSMutableData *data; // received Data
+	
 	BOOL executing;
 	BOOL finished;
 }

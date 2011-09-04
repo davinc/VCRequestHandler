@@ -28,6 +28,7 @@
 
 // Main Service
 #import "VCResponseFetchSyncService.h"
+#import "VCResponseFetchAsyncService.h"
 #import "VCDataProcessorDelegate.h"
 #import "VCResponseFetchServiceDelegate.h"
 
