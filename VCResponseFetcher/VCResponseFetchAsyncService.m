@@ -155,6 +155,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
 	if (self.isCancelled) {
+		NSLog(@"Canceling in didReceiveResponse");
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
@@ -165,6 +166,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData
 {
 	if (self.isCancelled) {
+		NSLog(@"Canceling in didReceiveData");
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
@@ -180,6 +182,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	if (self.isCancelled) {
+		NSLog(@"Canceling in connectionDidFinishLoading");
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
@@ -193,6 +196,7 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	if (self.isCancelled) {
+		NSLog(@"Canceling in didFailWithError");
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
