@@ -26,6 +26,7 @@
 
 #import "VCResponseFetchAsyncService.h"
 
+
 @interface VCResponseFetchAsyncService()
 -(void)didFinish;
 -(void)didFail:(NSError *)error;
@@ -67,6 +68,7 @@
 		return;	
 	}
 	
+	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
 	[self notifyStart];
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
@@ -88,9 +90,9 @@
 	[connection start];
 	
 	do {
-		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode 
-								 beforeDate:[NSDate distantFuture]];
+		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
 	} while (executing);
+	[autoreleasePool release], autoreleasePool = nil;
 }
 
 #pragma mark - Private Methods
@@ -136,7 +138,7 @@
 
 -(BOOL)isConcurrent
 {
-	return YES;
+	return NO;
 }
 
 -(BOOL)isExecuting
@@ -152,10 +154,20 @@
 
 #pragma mark - NSOperationDelegate Methods
 
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+    NSCachedURLResponse *memOnlyCachedResponse = [[NSCachedURLResponse alloc] initWithResponse:cachedResponse.response
+																						  data:cachedResponse.data
+																					  userInfo:cachedResponse.userInfo
+																				 storagePolicy:NSURLCacheStorageAllowed];
+    return [memOnlyCachedResponse autorelease];
+}
+
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
 	if (self.isCancelled) {
 		NSLog(@"Canceling in didReceiveResponse");
+		[connection cancel];
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
@@ -167,6 +179,7 @@
 {
 	if (self.isCancelled) {
 		NSLog(@"Canceling in didReceiveData");
+		[connection cancel];
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
@@ -183,6 +196,7 @@
 {
 	if (self.isCancelled) {
 		NSLog(@"Canceling in connectionDidFinishLoading");
+		[connection cancel];
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
@@ -197,6 +211,7 @@
 {
 	if (self.isCancelled) {
 		NSLog(@"Canceling in didFailWithError");
+		[connection cancel];
 		[self didFail:nil];
 		[self notifyFinish];
 		return;
