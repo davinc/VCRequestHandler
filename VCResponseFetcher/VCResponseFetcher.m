@@ -34,8 +34,7 @@
 	if (self) 
 	{
 		_networkOperationQueue = [[NSOperationQueue alloc] init];
-		[_networkOperationQueue setMaxConcurrentOperationCount:3];
-		_localOperationQueue = [[NSOperationQueue alloc] init];
+		[_networkOperationQueue setMaxConcurrentOperationCount:4];
 		
 		[[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*4]; // 4 megabytes
 		[[NSURLCache sharedURLCache] setDiskCapacity:1024*1024*50]; // 50 megabytes
@@ -46,7 +45,6 @@
 - (void)dealloc 
 {
 	[_networkOperationQueue release], _networkOperationQueue = nil;
-	[_localOperationQueue release], _localOperationQueue = nil;
 	[super dealloc];
 }
 
@@ -73,11 +71,7 @@
 	operation.responseProcessor = processor;
 	operation.cachePolicy = cache;
 	
-	if (cache != NSURLRequestReturnCacheDataElseLoad) {
-		[_localOperationQueue addOperation:operation];
-	}else {
-		[_networkOperationQueue addOperation:operation];
-	}
+	[_networkOperationQueue addOperation:operation];
 }
 
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
@@ -97,19 +91,15 @@
 	operation.responseProcessor = processor;
 	operation.cachePolicy = cache;
 	
-	if (cache != NSURLRequestReturnCacheDataElseLoad) {
-		[_localOperationQueue addOperation:operation];
-	}else {
-		[_networkOperationQueue addOperation:operation];
-	}
+	[_networkOperationQueue addOperation:operation];
 }
 
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer 
 {
 	for (VCResponseFetchSyncService *operation in [_networkOperationQueue operations]) {
 		if (operation.delegate == observer) {
-			[operation cancel];
 			operation.delegate = nil;
+			[operation cancel];
 		}
 	}
 }
