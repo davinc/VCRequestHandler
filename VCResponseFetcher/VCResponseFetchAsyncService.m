@@ -58,6 +58,7 @@
 	[allHTTPHeaderFields release], allHTTPHeaderFields = nil;
 	[body release], body = nil;
 	[method release], method = nil;
+	[data release], data = nil;
 	[super dealloc];
 }
 
