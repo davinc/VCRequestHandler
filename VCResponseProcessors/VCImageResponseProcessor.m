@@ -29,30 +29,29 @@
 
 @implementation VCImageResponseProcessor
 
-@synthesize image, error;
+@synthesize image = _image;
 
 -(id)init
 {
 	self = [super init];
 	if (self) {
-		image = nil;
-		error = nil;
+		_image = nil;
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-	[image release], image = nil;
-	[error release], error = nil;
+	[_image release], _image = nil;
 	[super dealloc];
 }
 
 #pragma mark - Public Method
-// For custom implementation override this method
--(void)processData:(NSData*)receivedData
+
+- (void)didFinishReceivingData
 {
-	self.image = [UIImage imageWithData:receivedData];
+	// Process received data
+	self.image = [UIImage imageWithData:self.data];
 }
 
 @end

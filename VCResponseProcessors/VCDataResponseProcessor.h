@@ -26,11 +26,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VCDataProcessorDelegate.h"
+@interface VCDataResponseProcessor : NSObject 
 
-@interface VCDataResponseProcessor : NSObject <VCDataProcessorDelegate> {
-}
-@property (nonatomic, retain) NSData *data;
+@property (nonatomic, retain) NSMutableData *data;
 @property (nonatomic, retain) NSError *error;
+@property (nonatomic, assign) NSInteger tag;
+
+- (void)didReceiveData:(NSData*)data;
+- (void)didFinishReceivingData;
 
 @end

@@ -29,30 +29,39 @@
 
 @implementation VCDataResponseProcessor
 
-@synthesize data, error;
+@synthesize data = _data, error = _error, tag;
 
 -(id)init
 {
 	self = [super init];
 	if (self) {
-		data = nil;
-		error = nil;
+		_data = nil;
+		_error = nil;
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-	[data release], data = nil;
-	[error release], error = nil;
+	[_data release], _data = nil;
+	[_error release], _error = nil;
 	[super dealloc];
 }
 
 #pragma mark - Public Method
-// For custom implementation override this method
--(void)processData:(NSData*)receivedData
+
+- (void)didReceiveData:(NSData*)data
 {
-	self.data = [[[NSData alloc] initWithData:receivedData] autorelease];
+	if (_data == nil) {
+		_data = [[NSMutableData alloc] init];
+	}
+	
+	[_data appendData:data];
+}
+
+- (void)didFinishReceivingData
+{
+	// Process received data
 }
 
 @end

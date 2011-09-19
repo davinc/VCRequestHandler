@@ -26,6 +26,7 @@
 
 #import "VCResponseFetchAsyncService.h"
 
+#import "VCDataResponseProcessor.h"
 
 @interface VCResponseFetchAsyncService()
 -(void)didFinish;
@@ -58,7 +59,7 @@
 	[allHTTPHeaderFields release], allHTTPHeaderFields = nil;
 	[body release], body = nil;
 	[method release], method = nil;
-	[data release], data = nil;
+//	[data release], data = nil;
 	[super dealloc];
 }
 
@@ -185,12 +186,8 @@
 		[self notifyFinish];
 		return;
 	}
-	
-	if (data == nil) {
-		data = [[NSMutableData alloc] init];
-	}
-	
-	[data appendData:receivedData];
+
+	[self.responseProcessor didReceiveData:receivedData];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -203,7 +200,8 @@
 		return;
 	}
 
-	[self.responseProcessor processData:data];
+	[self.responseProcessor didFinishReceivingData];
+	
 	[self didFinish];
 	[self notifyFinish];
 }

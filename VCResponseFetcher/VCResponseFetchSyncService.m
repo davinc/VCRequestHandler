@@ -26,6 +26,8 @@
 
 #import "VCResponseFetchSyncService.h"
 
+#import "VCDataResponseProcessor.h"
+
 @interface VCResponseFetchSyncService()
 -(void)didFinish;
 -(void)didFail:(NSError *)error;
@@ -113,7 +115,8 @@
 	}
 	else 
 	{
-		[self.responseProcessor processData:data];
+		[self.responseProcessor didReceiveData:data];
+		[self.responseProcessor didFinishReceivingData];
 		[self didFinish];
 	}
 	

@@ -63,7 +63,7 @@
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 				url:(NSString*)url
 			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor
+  responseProcessor:(VCDataResponseProcessor *)processor
 {
 	VCResponseFetchAsyncService *operation = [[[VCResponseFetchAsyncService alloc] init] autorelease];
 	operation.delegate = observer;
@@ -80,7 +80,7 @@
 	allHeaderFields:(NSDictionary*)allHeaderFields
 			   body:(NSData*)body
 			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor
+  responseProcessor:(VCDataResponseProcessor *)processor
 {
 	VCResponseFetchAsyncService *operation = [[[VCResponseFetchAsyncService alloc] init] autorelease];
 	operation.delegate = observer;

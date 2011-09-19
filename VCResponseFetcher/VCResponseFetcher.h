@@ -29,8 +29,8 @@
 // Main Service
 #import "VCResponseFetchSyncService.h"
 #import "VCResponseFetchAsyncService.h"
-#import "VCDataProcessorDelegate.h"
 #import "VCResponseFetchServiceDelegate.h"
+#import "VCDataResponseProcessor.h"
 
 @interface VCResponseFetcher : NSObject {
 @private
@@ -42,7 +42,7 @@
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 				url:(NSString*)url
 			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
+  responseProcessor:(VCDataResponseProcessor *)processor;
 
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
 			 method:(NSString*)method
@@ -50,7 +50,7 @@
 	allHeaderFields:(NSDictionary*)allHeaderFields
 			   body:(NSData*)body
 			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
+  responseProcessor:(VCDataResponseProcessor *)processor;
 
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;
 

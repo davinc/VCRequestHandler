@@ -26,12 +26,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VCDataProcessorDelegate.h"
+#import "VCDataResponseProcessor.h"
 
 @protocol VCResponseFetchServiceDelegate <NSObject>
 
 @optional
--(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response;
--(void)didFailReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response;
+-(void)didSucceedReceiveResponse:(VCDataResponseProcessor *)response;
+-(void)didFailReceiveResponse:(VCDataResponseProcessor *)response;
 
 @end

@@ -42,7 +42,6 @@
 		45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
 		45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
 		45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
-		45F2657D13A8C42800574CF0 /* VCDataProcessorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataProcessorDelegate.h; sourceTree = "<group>"; };
 		45F2658013A8C42800574CF0 /* VCResponseFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetcher.h; sourceTree = "<group>"; };
 		45F2658113A8C42800574CF0 /* VCResponseFetchSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchSyncService.h; sourceTree = "<group>"; };
 		45F2658213A8C42800574CF0 /* VCResponseFetchSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchSyncService.m; sourceTree = "<group>"; };
@@ -133,7 +132,6 @@
 				45F2658013A8C42800574CF0 /* VCResponseFetcher.h */,
 				45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */,
 				45F2658313A8C42800574CF0 /* VCResponseFetchServiceDelegate.h */,
-				45F2657D13A8C42800574CF0 /* VCDataProcessorDelegate.h */,
 				45F2658113A8C42800574CF0 /* VCResponseFetchSyncService.h */,
 				45F2658213A8C42800574CF0 /* VCResponseFetchSyncService.m */,
 				452FDDE514133BAC000240B4 /* VCResponseFetchAsyncService.h */,

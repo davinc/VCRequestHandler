@@ -26,12 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VCDataProcessorDelegate.h"
+#import "VCDataResponseProcessor.h"
 
-@interface VCImageResponseProcessor : NSObject<VCDataProcessorDelegate> {
-}
+@interface VCImageResponseProcessor : VCDataResponseProcessor
 
 @property (nonatomic, retain) UIImage *image;
-@property (nonatomic, retain) NSError *error;
 
 @end

@@ -26,24 +26,25 @@
 
 #import <Foundation/Foundation.h>
 #import "VCResponseFetchServiceDelegate.h"
-#import "VCDataProcessorDelegate.h"
+
+@class VCDataResponseProcessor;
 
 @interface VCResponseFetchAsyncService : NSOperation {
 	NSObject<VCResponseFetchServiceDelegate> *delegate;
-	NSObject<VCDataProcessorDelegate> *responseProcessor;
+	VCDataResponseProcessor *responseProcessor;
 	NSString *url;
 	NSURLRequestCachePolicy cachePolicy;
 	NSString *method;
 	NSDictionary *allHTTPHeaderFields;
 	NSData *body;
-	NSMutableData *data; // received Data
+//	NSMutableData *data; // received Data
 	
 	BOOL executing;
 	BOOL finished;
 }
 
 @property (nonatomic, assign) NSObject<VCResponseFetchServiceDelegate> *delegate;
-@property (nonatomic, retain) NSObject<VCDataProcessorDelegate> *responseProcessor;
+@property (nonatomic, retain) VCDataResponseProcessor *responseProcessor;
 @property (nonatomic, retain) NSString *url;
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 @property (nonatomic, retain) NSDictionary *allHTTPHeaderFields;

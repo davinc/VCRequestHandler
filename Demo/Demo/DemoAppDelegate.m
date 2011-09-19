@@ -99,17 +99,19 @@
 - (IBAction)didTapGetGoogleResponseButton:(id)sender {
 	self.responseTextView.text = [NSString string];
 	
+	VCDataResponseProcessor *processor = [[[VCDataResponseProcessor alloc] init] autorelease];
+	processor.tag = 1;
 	[[VCResponseFetcher sharedInstance] addObserver:self
 												url:@"http://www.google.com"
 											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
+								  responseProcessor:processor];
 //	[[VCResponseFetcher sharedInstance] addObserver:self
 //											 method:[NSString stringWithString:@"POST"] 
 //												url:@"http://posttestserver.com/post.php"
 //									allHeaderFields:[NSDictionary dictionaryWithObjectsAndKeys:@"UTF8", @"Content-Type", nil]
 //											   body:[[NSString stringWithString:@"\r\nTESTING DATA\r\n"] dataUsingEncoding:NSUTF8StringEncoding]
 //											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-//								  responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
+//								  responseProcessor:processor];
 }
 
 - (IBAction)didTapGetImageResponseButton:(UIButton*)sender {
@@ -125,10 +127,12 @@
 			break;
 	}
 	
+	VCImageResponseProcessor *processor = [[[VCImageResponseProcessor alloc] init] autorelease];
+	processor.tag = 2;
 	[[VCResponseFetcher sharedInstance] addObserver:self 
 												url:url
 											  cache:NSURLRequestReturnCacheDataElseLoad
-								  responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
+								  responseProcessor:processor];
 }
 
 
@@ -136,22 +140,22 @@
 
 #pragma mark - VCResponseFetchServiceDelegate Methods
 
--(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+-(void)didSucceedReceiveResponse:(VCDataResponseProcessor *)response {
 	
-	if ([response isKindOfClass:[VCDataResponseProcessor class]] ) {
+	if (response.tag == 1 ) {
 		self.responseTextView.textColor = [UIColor blackColor];
 		VCDataResponseProcessor *processor = (VCDataResponseProcessor*)response;
 		NSString *stringResponse = [[NSString alloc] initWithData:processor.data encoding:NSUTF8StringEncoding];
 		self.responseTextView.text = stringResponse;
 		[stringResponse release];
 	}
-	else if([response isKindOfClass:[VCImageResponseProcessor class]]) {
+	else if(response.tag == 2) {
 		VCImageResponseProcessor *processor = (VCImageResponseProcessor *)response;
 		self.responseImageView.image = processor.image;
 	}
 }
 
--(void)didFailReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+-(void)didFailReceiveResponse:(VCDataResponseProcessor *)response {
 	self.responseTextView.textColor = [UIColor redColor];
 
 	self.responseTextView.text = [NSString stringWithFormat:@"%@", [[response error]localizedDescription]];
