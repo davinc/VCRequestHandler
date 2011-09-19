@@ -26,6 +26,13 @@
 
 #import "VCResponseFetcher.h"
 
+@interface VCResponseFetcher()
+
+- (void)showNetworkActivityIndicator;
+- (void)hideNetworkActivityIndicatorIfRequired;
+
+@end
+
 @implementation VCResponseFetcher
 
 - (id)init 
@@ -72,6 +79,8 @@
 	operation.cachePolicy = cache;
 	
 	[_networkOperationQueue addOperation:operation];
+	
+	[self showNetworkActivityIndicator];
 }
 
 - (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
@@ -92,6 +101,8 @@
 	operation.cachePolicy = cache;
 	
 	[_networkOperationQueue addOperation:operation];
+
+	[self showNetworkActivityIndicator];
 }
 
 - (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer 
@@ -101,6 +112,26 @@
 			operation.delegate = nil;
 			[operation cancel];
 		}
+	}
+}
+
+
+
+#pragma mark - Private Methods
+
+- (void)showNetworkActivityIndicator
+{
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	
+	[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired) withObject:nil afterDelay:1.0];
+}
+
+- (void)hideNetworkActivityIndicatorIfRequired
+{
+	if ([_networkOperationQueue operationCount] == 0) {
+		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	}else {
+		[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired) withObject:nil afterDelay:1.0];
 	}
 }
 

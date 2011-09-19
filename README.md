@@ -14,5 +14,3 @@ Add 'VCResponseFetcher.h' to the header file, and the implementation class shoul
                                               cache:VCResponseFetchNoCache
                                   responseProcessor:[[[VCDataResponseProcessor alloc] init] autorelease]];
 </pre>
-
-Note: Only supports synchronous fetching for now.

@@ -37,7 +37,6 @@
 	NSString *method;
 	NSDictionary *allHTTPHeaderFields;
 	NSData *body;
-//	NSMutableData *data; // received Data
 	
 	BOOL executing;
 	BOOL finished;
