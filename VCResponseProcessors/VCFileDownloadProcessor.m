@@ -1,8 +1,8 @@
 //
-//  DemoAppDelegate.h
-//  Demo
+//  VCFileDownloadProcessor.m
+//  VCResponseFetcherTest
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 19/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,20 +24,64 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "VCFileDownloadProcessor.h"
 
-#import "VCResponseFetcher.h"
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCResponseFetchServiceDelegate> {	
-	UITextView *_responseTextView;
-	UIImageView *_responseImageView;
+@implementation VCFileDownloadProcessor
+
+@synthesize filePath = _filePath;
+
+-(id)init
+{
+	self = [super init];
+	if (self) {
+		_filePath = nil;
+		_outStream = nil;
+	}
+	return self;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITextView *responseTextView;
-@property (nonatomic, retain) IBOutlet UIImageView *responseImageView;
+-(void)dealloc
+{
+	[_filePath release], _filePath = nil;
+	[_outStream release], _outStream = nil;
+	[super dealloc];
+}
 
-- (IBAction)didTapGetGoogleResponseButton:(id)sender;
-- (IBAction)didTapGetImageResponseButton:(id)sender;
-- (IBAction)didTapDownloadFileButton:(id)sender;
+
+#pragma mark - Public Method
+
+- (void)didReceiveData:(NSData *)data
+{
+	if (self.filePath == nil) {
+		return;
+	}
+	
+	if (_outStream == nil) {
+		_outStream = [[NSOutputStream alloc] initToFileAtPath:self.filePath append:NO];
+		[_outStream open];
+	}
+	
+	NSUInteger leftToWrite = [data length];
+	NSUInteger written = 0;
+	do {
+		written = [_outStream write:[data bytes] maxLength:leftToWrite];
+		if (written == -1) break;
+		leftToWrite -= written;
+	} while (leftToWrite > 0);
+	
+	if (leftToWrite) {
+		NSLog(@"stream error: %@", [_outStream streamError]);
+	}
+}
+
+- (void)didFinishReceivingData
+{
+	// Process received data
+	if (_outStream) {
+		[_outStream close];
+		[_outStream release], _outStream = nil;
+	}
+}
+
 @end

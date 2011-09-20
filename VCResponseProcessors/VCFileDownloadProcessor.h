@@ -1,8 +1,8 @@
 //
-//  DemoAppDelegate.h
-//  Demo
+//  VCFileDownloadProcessor.h
+//  VCResponseFetcherTest
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 19/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,20 +24,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+/*
+ * @class
+ *
+ */
+ 
+#import <Foundation/Foundation.h>
 
-#import "VCResponseFetcher.h"
+#import "VCDataResponseProcessor.h"
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCResponseFetchServiceDelegate> {	
-	UITextView *_responseTextView;
-	UIImageView *_responseImageView;
+@interface VCFileDownloadProcessor : VCDataResponseProcessor {
+    NSOutputStream *_outStream;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UITextView *responseTextView;
-@property (nonatomic, retain) IBOutlet UIImageView *responseImageView;
+@property (nonatomic, retain) NSString *filePath;
 
-- (IBAction)didTapGetGoogleResponseButton:(id)sender;
-- (IBAction)didTapGetImageResponseButton:(id)sender;
-- (IBAction)didTapDownloadFileButton:(id)sender;
 @end

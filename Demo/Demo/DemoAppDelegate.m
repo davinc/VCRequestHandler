@@ -28,6 +28,7 @@
 
 #import "VCDataResponseProcessor.h"
 #import "VCImageResponseProcessor.h"
+#import "VCFileDownloadProcessor.h"
 
 @implementation DemoAppDelegate
 
@@ -116,22 +117,25 @@
 
 - (IBAction)didTapGetImageResponseButton:(UIButton*)sender {
 	self.responseImageView.image = nil;
-	
-	NSString *url = nil;
-	switch (sender.tag) {
-		case 0:
-			url = [NSString stringWithString:@"http://images.apple.com/macbookair/images/overview_hero_gallery_overview.png"];
-			break;
-		case 1:
-			url = [NSString stringWithString:@"http://images.apple.com/home/images/promo_lion.png"];
-			break;
-	}
-	
+		
 	VCImageResponseProcessor *processor = [[[VCImageResponseProcessor alloc] init] autorelease];
 	processor.tag = 2;
 	[[VCResponseFetcher sharedInstance] addObserver:self 
-												url:url
+												url:@"http://images.apple.com/home/images/promo_lion.png"
 											  cache:NSURLRequestReturnCacheDataElseLoad
+								  responseProcessor:processor];
+}
+
+- (IBAction)didTapDownloadFileButton:(id)sender {
+	VCFileDownloadProcessor *processor = [[[VCFileDownloadProcessor alloc] init] autorelease];
+	
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectoryPath = [paths objectAtIndex:0];
+	processor.filePath = [documentsDirectoryPath stringByAppendingPathComponent:@"file.png"];
+	
+	[[VCResponseFetcher sharedInstance] addObserver:self
+												url:@"http://f.cl.ly/items/341z2F3h2m1C0a0e291J/Beide.png"
+											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 								  responseProcessor:processor];
 }
 
