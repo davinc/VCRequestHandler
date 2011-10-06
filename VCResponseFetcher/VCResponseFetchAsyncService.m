@@ -159,6 +159,12 @@
 }
 
 
+- (void)cancel
+{
+	self.delegate = nil;
+	[super cancel];
+}
+
 #pragma mark - NSOperationDelegate Methods
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
