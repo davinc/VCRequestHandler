@@ -16,11 +16,10 @@
 		450ED19F13A8C351008A23EB /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450ED19D13A8C351008A23EB /* MainWindow.xib */; };
 		452FDDE714133BAC000240B4 /* VCResponseFetchAsyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = 452FDDE614133BAC000240B4 /* VCResponseFetchAsyncService.m */; };
 		45449DDD14276D840090A739 /* VCFileDownloadProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45449DDC14276D840090A739 /* VCFileDownloadProcessor.m */; };
+		455DEB43143DD8B4003203C1 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 455DEB42143DD8B4003203C1 /* VCDataResponseProcessor.m */; };
 		457AEBE713D5C190008A5583 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 457AEBE613D5C190008A5583 /* README.md */; };
-		45E41EFE13C77B1B0065B768 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E41EFB13C77B1B0065B768 /* VCDataResponseProcessor.m */; };
 		45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */; };
 		45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */; };
-		45F2658513A8C42800574CF0 /* VCResponseFetchSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F2658213A8C42800574CF0 /* VCResponseFetchSyncService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,15 +38,13 @@
 		452FDDE614133BAC000240B4 /* VCResponseFetchAsyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchAsyncService.m; sourceTree = "<group>"; };
 		45449DDB14276D840090A739 /* VCFileDownloadProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFileDownloadProcessor.h; sourceTree = "<group>"; };
 		45449DDC14276D840090A739 /* VCFileDownloadProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFileDownloadProcessor.m; sourceTree = "<group>"; };
+		455DEB41143DD8B4003203C1 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
+		455DEB42143DD8B4003203C1 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
 		457AEBE613D5C190008A5583 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		45E41EFA13C77B1B0065B768 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
-		45E41EFB13C77B1B0065B768 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
 		45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
 		45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
 		45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
 		45F2658013A8C42800574CF0 /* VCResponseFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetcher.h; sourceTree = "<group>"; };
-		45F2658113A8C42800574CF0 /* VCResponseFetchSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchSyncService.h; sourceTree = "<group>"; };
-		45F2658213A8C42800574CF0 /* VCResponseFetchSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchSyncService.m; sourceTree = "<group>"; };
 		45F2658313A8C42800574CF0 /* VCResponseFetchServiceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchServiceDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,8 +117,6 @@
 		45E41EF913C77B1B0065B768 /* VCResponseProcessors */ = {
 			isa = PBXGroup;
 			children = (
-				45E41EFA13C77B1B0065B768 /* VCDataResponseProcessor.h */,
-				45E41EFB13C77B1B0065B768 /* VCDataResponseProcessor.m */,
 				45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */,
 				45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */,
 				45449DDB14276D840090A739 /* VCFileDownloadProcessor.h */,
@@ -137,10 +132,10 @@
 				45F2658013A8C42800574CF0 /* VCResponseFetcher.h */,
 				45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */,
 				45F2658313A8C42800574CF0 /* VCResponseFetchServiceDelegate.h */,
-				45F2658113A8C42800574CF0 /* VCResponseFetchSyncService.h */,
-				45F2658213A8C42800574CF0 /* VCResponseFetchSyncService.m */,
 				452FDDE514133BAC000240B4 /* VCResponseFetchAsyncService.h */,
 				452FDDE614133BAC000240B4 /* VCResponseFetchAsyncService.m */,
+				455DEB41143DD8B4003203C1 /* VCDataResponseProcessor.h */,
+				455DEB42143DD8B4003203C1 /* VCDataResponseProcessor.m */,
 			);
 			name = VCResponseFetcher;
 			path = ../../VCResponseFetcher;
@@ -208,12 +203,11 @@
 			files = (
 				450ED19913A8C351008A23EB /* main.m in Sources */,
 				450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */,
-				45F2658513A8C42800574CF0 /* VCResponseFetchSyncService.m in Sources */,
 				45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */,
-				45E41EFE13C77B1B0065B768 /* VCDataResponseProcessor.m in Sources */,
 				45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */,
 				452FDDE714133BAC000240B4 /* VCResponseFetchAsyncService.m in Sources */,
 				45449DDD14276D840090A739 /* VCFileDownloadProcessor.m in Sources */,
+				455DEB43143DD8B4003203C1 /* VCDataResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

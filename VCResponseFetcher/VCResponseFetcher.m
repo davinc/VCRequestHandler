@@ -42,9 +42,6 @@
 	{
 		_networkOperationQueue = [[NSOperationQueue alloc] init];
 		[_networkOperationQueue setMaxConcurrentOperationCount:4];
-		
-		[[NSURLCache sharedURLCache] setMemoryCapacity:1024*1024*4]; // 4 megabytes
-		[[NSURLCache sharedURLCache] setDiskCapacity:1024*1024*50]; // 50 megabytes
 	}
 	return self;
 }
@@ -67,12 +64,15 @@
 	return sharedInstance;
 }
 
-- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-				url:(NSString*)url
-			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(VCDataResponseProcessor *)processor
+- (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
+										 url:(NSString*)url
+									   cache:(NSURLRequestCachePolicy)cache
+						   responseProcessor:(VCDataResponseProcessor *)processor
 {
-	VCResponseFetchAsyncService *operation = [[[VCResponseFetchAsyncService alloc] init] autorelease];
+#if DEBUG
+	NSLog(@"%@", url);
+#endif
+	VCResponseFetchAsyncService *operation = [[VCResponseFetchAsyncService alloc] init];
 	operation.delegate = observer;
 	operation.url = url;
 	operation.responseProcessor = processor;
@@ -81,17 +81,22 @@
 	[_networkOperationQueue addOperation:operation];
 	
 	[self showNetworkActivityIndicator];
+	
+	return [operation autorelease];
 }
 
-- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-			 method:(NSString*)method
-				url:(NSString*)url
-	allHeaderFields:(NSDictionary*)allHeaderFields
-			   body:(NSData*)body
-			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(VCDataResponseProcessor *)processor
+- (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
+									  method:(NSString*)method
+										 url:(NSString*)url
+							 allHeaderFields:(NSDictionary*)allHeaderFields
+										body:(NSData*)body
+									   cache:(NSURLRequestCachePolicy)cache
+						   responseProcessor:(VCDataResponseProcessor *)processor
 {
-	VCResponseFetchAsyncService *operation = [[[VCResponseFetchAsyncService alloc] init] autorelease];
+#if DEBUG
+	NSLog(@"%@", url);
+#endif
+	VCResponseFetchAsyncService *operation = [[VCResponseFetchAsyncService alloc] init];
 	operation.delegate = observer;
 	operation.method = method;
 	operation.url = url;
@@ -101,20 +106,11 @@
 	operation.cachePolicy = cache;
 	
 	[_networkOperationQueue addOperation:operation];
-
+	
 	[self showNetworkActivityIndicator];
+	
+	return [operation autorelease];
 }
-
-- (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer 
-{
-	for (VCResponseFetchSyncService *operation in [_networkOperationQueue operations]) {
-		if (operation.delegate == observer) {
-			operation.delegate = nil;
-			[operation cancel];
-		}
-	}
-}
-
 
 
 #pragma mark - Private Methods

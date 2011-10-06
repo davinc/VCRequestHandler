@@ -1,5 +1,5 @@
 //
-//  VCDataResponseProcessor.h
+//  VCDataResponseProcessor.m
 //  VCResponseFetcherTest
 //
 //  Created by Vinay Chavan on 4/7/11.
@@ -24,15 +24,53 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "VCDataResponseProcessor.h"
 
-@interface VCDataResponseProcessor : NSObject 
 
-@property (nonatomic, retain) NSMutableData *data;
-@property (nonatomic, retain) NSError *error;
-@property (nonatomic, assign) NSInteger tag;
+@implementation VCDataResponseProcessor
 
-- (void)didReceiveData:(NSData*)data;
-- (void)didFinishReceivingData;
+@synthesize data = _data, error = _error, tag;
+
+-(id)init
+{
+	self = [super init];
+	if (self) {
+		_data = nil;
+		_error = nil;
+	}
+	return self;
+}
+
+-(void)dealloc
+{
+	[_data release], _data = nil;
+	[_error release], _error = nil;
+	[super dealloc];
+}
+
+#pragma mark - Public Method
+
+- (void)willStartReceivingData
+{
+	_data = [[NSMutableData alloc] init];
+}
+
+- (void)didReceiveData:(NSData*)data
+{
+	[_data appendData:data];
+}
+
+- (void)didFinishReceivingData
+{
+	// Process received data
+#if DEBUG
+	NSLog(@"%@", [[[NSString alloc]initWithData:self.data encoding:NSUTF8StringEncoding]autorelease]);
+#endif
+}
+
+- (void)didFailReceivingDataWithError:(NSError *)error
+{
+	self.error = error;
+}
 
 @end

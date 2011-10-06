@@ -30,7 +30,7 @@
 
 @interface VCResponseFetchAsyncService()
 -(void)didFinish;
--(void)didFail:(NSError *)error;
+-(void)didFail;
 -(void)notifyStart;
 -(void)notifyFinish;
 @end
@@ -64,6 +64,12 @@
 
 -(void)start
 {
+	if (self.isCancelled) {
+		NSLog(@"Canceling in start");
+		[self notifyFinish];
+		return;
+	}
+	
 	if (self.url == nil) {
 		[self notifyFinish];
 		return;	
@@ -74,7 +80,7 @@
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
 														   cachePolicy:self.cachePolicy
-													   timeoutInterval:30];
+													   timeoutInterval:5];
 	
 	if (self.method) {
 		[request setHTTPMethod:self.method];
@@ -85,7 +91,7 @@
 	if (self.body) {
 		[request setHTTPBody:self.body];
 	}
-
+	
 	NSURLConnection *connection = [NSURLConnection connectionWithRequest:request
 																delegate:self];
 	[connection start];
@@ -100,6 +106,7 @@
 
 -(void)didFinish
 {
+	NSLog(@"%@", NSStringFromClass([self.delegate class]));
 	if ([self.delegate respondsToSelector:@selector(didSucceedReceiveResponse:)]) 
 	{
 		[self.delegate performSelectorOnMainThread:@selector(didSucceedReceiveResponse:)
@@ -108,9 +115,8 @@
 	}
 }
 
--(void)didFail:(NSError *)error
+-(void)didFail
 {
-	[self.responseProcessor setError:error];
 	if ([self.delegate respondsToSelector:@selector(didFailReceiveResponse:)])
 	{
 		[self.delegate performSelectorOnMainThread:@selector(didFailReceiveResponse:)
@@ -169,11 +175,12 @@
 	if (self.isCancelled) {
 		NSLog(@"Canceling in didReceiveResponse");
 		[connection cancel];
-		[self didFail:nil];
+		[self didFail];
 		[self notifyFinish];
 		return;
 	}
 	
+	[self.responseProcessor willStartReceivingData];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData
@@ -181,11 +188,11 @@
 	if (self.isCancelled) {
 		NSLog(@"Canceling in didReceiveData");
 		[connection cancel];
-		[self didFail:nil];
+		[self didFail];
 		[self notifyFinish];
 		return;
 	}
-
+	
 	[self.responseProcessor didReceiveData:receivedData];
 }
 
@@ -194,28 +201,26 @@
 	if (self.isCancelled) {
 		NSLog(@"Canceling in connectionDidFinishLoading");
 		[connection cancel];
-		[self didFail:nil];
+		[self didFail];
 		[self notifyFinish];
 		return;
 	}
-
+	
 	[self.responseProcessor didFinishReceivingData];
 	
-	[self didFinish];
+	if (self.responseProcessor.error) {
+		[self didFail];
+	}else {
+		[self didFinish];
+	}
+	
 	[self notifyFinish];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	if (self.isCancelled) {
-		NSLog(@"Canceling in didFailWithError");
-		[connection cancel];
-		[self didFail:nil];
-		[self notifyFinish];
-		return;
-	}
-
-	[self didFail:error];
+	[self.responseProcessor didFailReceivingDataWithError:error];
+	[self didFail];
 	[self notifyFinish];
 }
 
