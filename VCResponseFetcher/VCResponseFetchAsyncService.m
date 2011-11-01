@@ -28,13 +28,6 @@
 
 #import "VCDataResponseProcessor.h"
 
-@interface VCResponseFetchAsyncService()
--(void)didFinish;
--(void)didFail;
--(void)notifyStart;
--(void)notifyFinish;
-@end
-
 @implementation VCResponseFetchAsyncService
 
 @synthesize delegate, url, responseProcessor, cachePolicy, allHTTPHeaderFields, body, method;
@@ -106,13 +99,13 @@
 
 -(void)didFinish
 {
-	NSLog(@"%@", NSStringFromClass([self.delegate class]));
 	if ([self.delegate respondsToSelector:@selector(didSucceedReceiveResponse:)]) 
 	{
 		[self.delegate performSelectorOnMainThread:@selector(didSucceedReceiveResponse:)
 										withObject:self.responseProcessor
 									 waitUntilDone:NO];
 	}
+	[self notifyFinish];
 }
 
 -(void)didFail
@@ -123,6 +116,7 @@
 										withObject:self.responseProcessor
 									 waitUntilDone:NO];
 	}
+	[self notifyFinish];
 }
 
 -(void)notifyStart 
@@ -159,12 +153,6 @@
 }
 
 
-- (void)cancel
-{
-	self.delegate = nil;
-	[super cancel];
-}
-
 #pragma mark - NSOperationDelegate Methods
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
@@ -182,10 +170,9 @@
 		NSLog(@"Canceling in didReceiveResponse");
 		[connection cancel];
 		[self didFail];
-		[self notifyFinish];
 		return;
 	}
-	
+	self.responseProcessor.expectedDataLength = [response expectedContentLength];
 	[self.responseProcessor willStartReceivingData];
 }
 
@@ -195,10 +182,10 @@
 		NSLog(@"Canceling in didReceiveData");
 		[connection cancel];
 		[self didFail];
-		[self notifyFinish];
 		return;
 	}
 	
+	self.responseProcessor.receivedDataLength += [receivedData length];
 	[self.responseProcessor didReceiveData:receivedData];
 }
 
@@ -208,7 +195,6 @@
 		NSLog(@"Canceling in connectionDidFinishLoading");
 		[connection cancel];
 		[self didFail];
-		[self notifyFinish];
 		return;
 	}
 	
@@ -219,15 +205,12 @@
 	}else {
 		[self didFinish];
 	}
-	
-	[self notifyFinish];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	[self.responseProcessor didFailReceivingDataWithError:error];
 	[self didFail];
-	[self notifyFinish];
 }
 
 @end

@@ -42,11 +42,17 @@
 	NSMutableData *_data;
 	NSError *_error;
 	NSInteger tag;
+	
+	// For download progress
+	long long expectedDataLength;
+	long long receivedDataLength;
 }
 
 @property (nonatomic, readonly) NSData *data;        // Received data
 @property (nonatomic, retain) NSError *error;        // error is nil if the request completes with success, else holds an error that occured during the process.
 @property (nonatomic, assign) NSInteger tag;         // used to identify the request.
+@property (nonatomic, assign) long long expectedDataLength;
+@property (nonatomic, assign) long long receivedDataLength;
 
 - (void)willStartReceivingData;                          // To specify that download will start
 - (void)didReceiveData:(NSData*)data;                    // To process any partial data.

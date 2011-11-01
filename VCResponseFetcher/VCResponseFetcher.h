@@ -36,7 +36,7 @@
     NSOperationQueue *_networkOperationQueue;
 }
 
-+(VCResponseFetcher*)sharedInstance;
++ (VCResponseFetcher*)sharedInstance;
 
 - (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate> *)observer
 										 url:(NSString *)url
@@ -50,5 +50,7 @@
 										body:(NSData *)body
 									   cache:(NSURLRequestCachePolicy)cache
 						   responseProcessor:(VCDataResponseProcessor *)processor;
+
+- (void)addOperation:(VCResponseFetchAsyncService *)service; // For adding any custom service
 
 @end

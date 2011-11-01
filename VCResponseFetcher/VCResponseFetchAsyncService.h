@@ -29,7 +29,7 @@
 
 @class VCDataResponseProcessor;
 
-@interface VCResponseFetchAsyncService : NSOperation {
+@interface VCResponseFetchAsyncService : NSOperation <NSURLConnectionDelegate> {
 	NSObject<VCResponseFetchServiceDelegate> *delegate;
 	VCDataResponseProcessor *responseProcessor;
 	NSString *url;
@@ -49,5 +49,10 @@
 @property (nonatomic, retain) NSDictionary *allHTTPHeaderFields;
 @property (nonatomic, retain) NSData *body;
 @property (nonatomic, retain) NSString *method;
+
+-(void)didFinish;
+-(void)didFail;
+-(void)notifyStart;
+-(void)notifyFinish;
 
 @end

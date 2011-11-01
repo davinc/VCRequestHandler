@@ -112,6 +112,11 @@
 	return [operation autorelease];
 }
 
+- (void)addOperation:(VCResponseFetchAsyncService *)service
+{
+	[_networkOperationQueue addOperation:service];
+	[self showNetworkActivityIndicator];
+}
 
 #pragma mark - Private Methods
 

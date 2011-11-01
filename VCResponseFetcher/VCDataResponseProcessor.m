@@ -26,10 +26,10 @@
 
 #import "VCDataResponseProcessor.h"
 
-
 @implementation VCDataResponseProcessor
 
-@synthesize data = _data, error = _error, tag;
+@synthesize data = _data, error = _error;
+@synthesize tag, expectedDataLength, receivedDataLength;
 
 -(id)init
 {
