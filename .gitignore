@@ -4,6 +4,9 @@
 *.pbxuser
 *.perspective 
 *.xcuserstate
+*.xcsettings
+*.xcscheme
+*.xcworkspacedata
 *.perspectivev3
 *.pyc 
 *~.nib/
