@@ -14,3 +14,5 @@ Add 'VCRequestHandler.h' to the header file, and the implementation class should
                                                     cache:VCResponseFetchNoCache
                                         responseProcessor:[[[CustomResponseProcessor alloc] init] autorelease]];
 </pre>
+
+When removing a view or deallocating a delegate of request, Do not forget to set request delegate to nil.
