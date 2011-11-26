@@ -1,8 +1,8 @@
 //
-//  VCResponseFetchAsyncService.h
-//  VCResponseFetcherTest
+//  VCRequestDelegate.h
+//  VCRequestHandler
 //
-//  Created by Vinay Chavan on 04/09/11.
+//  Created by Vinay Chavan on 4/11/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -25,34 +25,14 @@
 //  THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "VCResponseFetchServiceDelegate.h"
 
-@class VCDataResponseProcessor;
+@class VCRequest;
+@class VCResponseProcessor;
 
-@interface VCResponseFetchAsyncService : NSOperation <NSURLConnectionDelegate> {
-	NSObject<VCResponseFetchServiceDelegate> *delegate;
-	VCDataResponseProcessor *responseProcessor;
-	NSString *url;
-	NSURLRequestCachePolicy cachePolicy;
-	NSString *method;
-	NSDictionary *allHTTPHeaderFields;
-	NSData *body;
-	
-	BOOL executing;
-	BOOL finished;
-}
+@protocol VCRequestDelegate <NSObject>
 
-@property (nonatomic, assign) NSObject<VCResponseFetchServiceDelegate> *delegate;
-@property (nonatomic, retain) VCDataResponseProcessor *responseProcessor;
-@property (nonatomic, retain) NSString *url;
-@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
-@property (nonatomic, retain) NSDictionary *allHTTPHeaderFields;
-@property (nonatomic, retain) NSData *body;
-@property (nonatomic, retain) NSString *method;
-
--(void)didFinish;
--(void)didFail;
--(void)notifyStart;
--(void)notifyFinish;
+@optional
+- (void)didFinishRequest:(VCRequest *)request;
+- (void)didFailRequest:(VCRequest *)request;
 
 @end

@@ -1,6 +1,6 @@
 //
 //  VCImageResponseProcessor.m
-//  Demo
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 15/06/11.
 //  

@@ -26,9 +26,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCResponseFetcher.h"
+#import "VCRequestHandler.h"
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCResponseFetchServiceDelegate> {	
+@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCRequestDelegate> {	
 	UITextView *_responseTextView;
 	UIImageView *_responseImageView;
 }
@@ -39,5 +39,4 @@
 
 - (IBAction)didTapGetGoogleResponseButton:(id)sender;
 - (IBAction)didTapGetImageResponseButton:(id)sender;
-- (IBAction)didTapDownloadFileButton:(id)sender;
 @end

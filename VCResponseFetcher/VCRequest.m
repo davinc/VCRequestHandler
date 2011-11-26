@@ -1,6 +1,6 @@
 //
-//  VCResponseFetchAsyncService.m
-//  VCResponseFetcherTest
+//  VCRequest.m
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 04/09/11.
 //  
@@ -24,13 +24,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VCResponseFetchAsyncService.h"
+#import "VCRequest.h"
 
-#import "VCDataResponseProcessor.h"
+#import "VCResponseProcessor.h"
 
-@implementation VCResponseFetchAsyncService
+@implementation VCRequest
 
-@synthesize delegate, url, responseProcessor, cachePolicy, allHTTPHeaderFields, body, method;
+@synthesize delegate, url, responseProcessor, cachePolicy, allHTTPHeaderFields, body, method, tag;
 
 -(id)init
 {
@@ -91,7 +91,7 @@
 	
 	do {
 		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
-	} while (executing);
+	} while (isExecuting);
 	[autoreleasePool release], autoreleasePool = nil;
 }
 
@@ -99,10 +99,10 @@
 
 -(void)didFinish
 {
-	if ([self.delegate respondsToSelector:@selector(didSucceedReceiveResponse:)]) 
+	if ([self.delegate respondsToSelector:@selector(didFinishRequest:)]) 
 	{
-		[self.delegate performSelectorOnMainThread:@selector(didSucceedReceiveResponse:)
-										withObject:self.responseProcessor
+		[self.delegate performSelectorOnMainThread:@selector(didFinishRequest:)
+										withObject:self
 									 waitUntilDone:NO];
 	}
 	[self notifyFinish];
@@ -110,10 +110,10 @@
 
 -(void)didFail
 {
-	if ([self.delegate respondsToSelector:@selector(didFailReceiveResponse:)])
+	if ([self.delegate respondsToSelector:@selector(didFailRequest:)])
 	{
-		[self.delegate performSelectorOnMainThread:@selector(didFailReceiveResponse:)
-										withObject:self.responseProcessor
+		[self.delegate performSelectorOnMainThread:@selector(didFailRequest:)
+										withObject:self
 									 waitUntilDone:NO];
 	}
 	[self notifyFinish];
@@ -122,8 +122,8 @@
 -(void)notifyStart 
 {
 	[self willChangeValueForKey:@"isExecuting"];
-	executing = YES;
-	finished = NO;
+	isExecuting = YES;
+	isFinished = NO;
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
@@ -131,8 +131,8 @@
 {
 	[self willChangeValueForKey:@"isExecuting"];
 	[self willChangeValueForKey:@"isFinished"];
-	executing = NO;
-	finished  = YES;
+	isExecuting = NO;
+	isFinished  = YES;
 	[self didChangeValueForKey:@"isFinished"];
 	[self didChangeValueForKey:@"isExecuting"];
 }
@@ -144,12 +144,12 @@
 
 -(BOOL)isExecuting
 {
-	return executing;
+	return isExecuting;
 }
 
 -(BOOL)isFinished
 {
-	return finished;
+	return isFinished;
 }
 
 

@@ -1,8 +1,8 @@
 //
-//  VCFileDownloadProcessor.h
-//  VCResponseFetcherTest
+//  VCRequestHandler.h
+//  VCRequestHandler
 //
-//  Created by Vinay Chavan on 19/09/11.
+//  Created by Vinay Chavan on 15/06/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,19 +24,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-/*
- * @class
- *
- */
- 
 #import <Foundation/Foundation.h>
 
-#import "VCDataResponseProcessor.h"
+// Main Service
+#import "VCRequest.h"
+#import "VCResponseProcessor.h"
 
-@interface VCFileDownloadProcessor : VCDataResponseProcessor {
-    NSOutputStream *_outStream;
+@interface VCRequestHandler : NSObject {
+@private
+    NSOperationQueue *_networkOperationQueue;
 }
 
-@property (nonatomic, retain) NSString *filePath;
++ (VCRequestHandler*)sharedHandler;
+
+- (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
+							   url:(NSString *)url
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor;
+
+- (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
+							method:(NSString *)method
+							   url:(NSString *)url
+				   allHeaderFields:(NSDictionary *)allHeaderFields
+							  body:(NSData *)body
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor;
 
 @end

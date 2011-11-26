@@ -1,6 +1,6 @@
 //
-//  VCResponseFetcher.m
-//  Demo
+//  VCRequestHandler.m
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 15/06/11.
 //  
@@ -24,16 +24,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VCResponseFetcher.h"
+#import "VCRequestHandler.h"
 
-@interface VCResponseFetcher()
+@interface VCRequestHandler()
 
 - (void)showNetworkActivityIndicator;
 - (void)hideNetworkActivityIndicatorIfRequired;
 
 @end
 
-@implementation VCResponseFetcher
+@implementation VCRequestHandler
 
 - (id)init 
 {
@@ -52,27 +52,27 @@
 	[super dealloc];
 }
 
-+(VCResponseFetcher*)sharedInstance 
++(VCRequestHandler*)sharedHandler 
 {
-	static VCResponseFetcher *sharedInstance = nil;
+	static VCRequestHandler *sharedInstance = nil;
 	
 	if (sharedInstance == nil) 
 	{
-		sharedInstance = [[VCResponseFetcher alloc] init];
+		sharedInstance = [[VCRequestHandler alloc] init];
 	}
 	
 	return sharedInstance;
 }
 
-- (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-										 url:(NSString*)url
-									   cache:(NSURLRequestCachePolicy)cache
-						   responseProcessor:(VCDataResponseProcessor *)processor
+- (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
+							   url:(NSString*)url
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor
 {
 #if DEBUG
 	NSLog(@"%@", url);
 #endif
-	VCResponseFetchAsyncService *operation = [[VCResponseFetchAsyncService alloc] init];
+	VCRequest *operation = [[VCRequest alloc] init];
 	operation.delegate = observer;
 	operation.url = url;
 	operation.responseProcessor = processor;
@@ -85,18 +85,18 @@
 	return [operation autorelease];
 }
 
-- (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-									  method:(NSString*)method
-										 url:(NSString*)url
-							 allHeaderFields:(NSDictionary*)allHeaderFields
-										body:(NSData*)body
-									   cache:(NSURLRequestCachePolicy)cache
-						   responseProcessor:(VCDataResponseProcessor *)processor
+- (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
+							method:(NSString*)method
+							   url:(NSString*)url
+				   allHeaderFields:(NSDictionary*)allHeaderFields
+							  body:(NSData*)body
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor
 {
 #if DEBUG
 	NSLog(@"%@", url);
 #endif
-	VCResponseFetchAsyncService *operation = [[VCResponseFetchAsyncService alloc] init];
+	VCRequest *operation = [[VCRequest alloc] init];
 	operation.delegate = observer;
 	operation.method = method;
 	operation.url = url;
@@ -112,7 +112,7 @@
 	return [operation autorelease];
 }
 
-- (void)addOperation:(VCResponseFetchAsyncService *)service
+- (void)addOperation:(VCRequest *)service
 {
 	[_networkOperationQueue addOperation:service];
 	[self showNetworkActivityIndicator];

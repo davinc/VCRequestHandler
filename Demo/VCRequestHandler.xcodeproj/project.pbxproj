@@ -14,38 +14,35 @@
 		450ED19913A8C351008A23EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19813A8C351008A23EB /* main.m */; };
 		450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19B13A8C351008A23EB /* DemoAppDelegate.m */; };
 		450ED19F13A8C351008A23EB /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450ED19D13A8C351008A23EB /* MainWindow.xib */; };
-		452FDDE714133BAC000240B4 /* VCResponseFetchAsyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = 452FDDE614133BAC000240B4 /* VCResponseFetchAsyncService.m */; };
-		45449DDD14276D840090A739 /* VCFileDownloadProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45449DDC14276D840090A739 /* VCFileDownloadProcessor.m */; };
-		455DEB43143DD8B4003203C1 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 455DEB42143DD8B4003203C1 /* VCDataResponseProcessor.m */; };
+		452FDDE714133BAC000240B4 /* VCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 452FDDE614133BAC000240B4 /* VCRequest.m */; };
+		455DEB43143DD8B4003203C1 /* VCResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 455DEB42143DD8B4003203C1 /* VCResponseProcessor.m */; };
 		457AEBE713D5C190008A5583 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 457AEBE613D5C190008A5583 /* README.md */; };
 		45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */; };
-		45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */; };
+		45EC72E313AA7388007EA9D3 /* VCRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCRequestHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		450ED18713A8C351008A23EB /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		450ED18713A8C351008A23EB /* VCRequestHandler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VCRequestHandler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		450ED18B13A8C351008A23EB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		450ED18D13A8C351008A23EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		450ED18F13A8C351008A23EB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		450ED19313A8C351008A23EB /* Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Demo-Info.plist"; sourceTree = "<group>"; };
+		450ED19313A8C351008A23EB /* VCRequestHandler-Info.plist */ = {isa = PBXFileReference; path = "VCRequestHandler-Info.plist"; sourceTree = "<group>"; };
 		450ED19513A8C351008A23EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		450ED19713A8C351008A23EB /* Demo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Prefix.pch"; sourceTree = "<group>"; };
+		450ED19713A8C351008A23EB /* VCRequestHandler-Prefix.pch */ = {isa = PBXFileReference; path = "VCRequestHandler-Prefix.pch"; sourceTree = "<group>"; };
 		450ED19813A8C351008A23EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		450ED19A13A8C351008A23EB /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		450ED19B13A8C351008A23EB /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
 		450ED19E13A8C351008A23EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		452FDDE514133BAC000240B4 /* VCResponseFetchAsyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchAsyncService.h; sourceTree = "<group>"; };
-		452FDDE614133BAC000240B4 /* VCResponseFetchAsyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchAsyncService.m; sourceTree = "<group>"; };
-		45449DDB14276D840090A739 /* VCFileDownloadProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFileDownloadProcessor.h; sourceTree = "<group>"; };
-		45449DDC14276D840090A739 /* VCFileDownloadProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFileDownloadProcessor.m; sourceTree = "<group>"; };
-		455DEB41143DD8B4003203C1 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
-		455DEB42143DD8B4003203C1 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
+		452FDDE514133BAC000240B4 /* VCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequest.h; sourceTree = "<group>"; };
+		452FDDE614133BAC000240B4 /* VCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequest.m; sourceTree = "<group>"; };
+		455DEB41143DD8B4003203C1 /* VCResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseProcessor.h; sourceTree = "<group>"; };
+		455DEB42143DD8B4003203C1 /* VCResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseProcessor.m; sourceTree = "<group>"; };
 		457AEBE613D5C190008A5583 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
 		45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
-		45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
-		45F2658013A8C42800574CF0 /* VCResponseFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetcher.h; sourceTree = "<group>"; };
-		45F2658313A8C42800574CF0 /* VCResponseFetchServiceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchServiceDelegate.h; sourceTree = "<group>"; };
+		45EC72DF13AA7388007EA9D3 /* VCRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequestHandler.m; sourceTree = "<group>"; };
+		45F2658013A8C42800574CF0 /* VCRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestHandler.h; sourceTree = "<group>"; };
+		45F2658313A8C42800574CF0 /* VCRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +72,7 @@
 		450ED18813A8C351008A23EB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				450ED18713A8C351008A23EB /* Demo.app */,
+				450ED18713A8C351008A23EB /* VCRequestHandler.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,9 +103,9 @@
 		450ED19213A8C351008A23EB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				450ED19313A8C351008A23EB /* Demo-Info.plist */,
+				450ED19313A8C351008A23EB /* VCRequestHandler-Info.plist */,
 				450ED19413A8C351008A23EB /* InfoPlist.strings */,
-				450ED19713A8C351008A23EB /* Demo-Prefix.pch */,
+				450ED19713A8C351008A23EB /* VCRequestHandler-Prefix.pch */,
 				450ED19813A8C351008A23EB /* main.m */,
 			);
 			name = "Supporting Files";
@@ -119,8 +116,6 @@
 			children = (
 				45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */,
 				45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */,
-				45449DDB14276D840090A739 /* VCFileDownloadProcessor.h */,
-				45449DDC14276D840090A739 /* VCFileDownloadProcessor.m */,
 			);
 			name = VCResponseProcessors;
 			path = ../../VCResponseProcessors;
@@ -129,13 +124,13 @@
 		45F2657C13A8C42800574CF0 /* VCResponseFetcher */ = {
 			isa = PBXGroup;
 			children = (
-				45F2658013A8C42800574CF0 /* VCResponseFetcher.h */,
-				45EC72DF13AA7388007EA9D3 /* VCResponseFetcher.m */,
-				45F2658313A8C42800574CF0 /* VCResponseFetchServiceDelegate.h */,
-				452FDDE514133BAC000240B4 /* VCResponseFetchAsyncService.h */,
-				452FDDE614133BAC000240B4 /* VCResponseFetchAsyncService.m */,
-				455DEB41143DD8B4003203C1 /* VCDataResponseProcessor.h */,
-				455DEB42143DD8B4003203C1 /* VCDataResponseProcessor.m */,
+				45F2658013A8C42800574CF0 /* VCRequestHandler.h */,
+				45EC72DF13AA7388007EA9D3 /* VCRequestHandler.m */,
+				45F2658313A8C42800574CF0 /* VCRequestDelegate.h */,
+				452FDDE514133BAC000240B4 /* VCRequest.h */,
+				452FDDE614133BAC000240B4 /* VCRequest.m */,
+				455DEB41143DD8B4003203C1 /* VCResponseProcessor.h */,
+				455DEB42143DD8B4003203C1 /* VCResponseProcessor.m */,
 			);
 			name = VCResponseFetcher;
 			path = ../../VCResponseFetcher;
@@ -144,9 +139,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		450ED18613A8C351008A23EB /* Demo */ = {
+		450ED18613A8C351008A23EB /* VCRequestHandler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 450ED1A213A8C351008A23EB /* Build configuration list for PBXNativeTarget "Demo" */;
+			buildConfigurationList = 450ED1A213A8C351008A23EB /* Build configuration list for PBXNativeTarget "VCRequestHandler" */;
 			buildPhases = (
 				450ED18313A8C351008A23EB /* Sources */,
 				450ED18413A8C351008A23EB /* Frameworks */,
@@ -156,9 +151,9 @@
 			);
 			dependencies = (
 			);
-			name = Demo;
+			name = VCRequestHandler;
 			productName = Demo;
-			productReference = 450ED18713A8C351008A23EB /* Demo.app */;
+			productReference = 450ED18713A8C351008A23EB /* VCRequestHandler.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -166,7 +161,7 @@
 /* Begin PBXProject section */
 		450ED17E13A8C351008A23EB /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 450ED18113A8C351008A23EB /* Build configuration list for PBXProject "Demo" */;
+			buildConfigurationList = 450ED18113A8C351008A23EB /* Build configuration list for PBXProject "VCRequestHandler" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -178,7 +173,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				450ED18613A8C351008A23EB /* Demo */,
+				450ED18613A8C351008A23EB /* VCRequestHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -203,11 +198,10 @@
 			files = (
 				450ED19913A8C351008A23EB /* main.m in Sources */,
 				450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */,
-				45EC72E313AA7388007EA9D3 /* VCResponseFetcher.m in Sources */,
+				45EC72E313AA7388007EA9D3 /* VCRequestHandler.m in Sources */,
 				45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */,
-				452FDDE714133BAC000240B4 /* VCResponseFetchAsyncService.m in Sources */,
-				45449DDD14276D840090A739 /* VCFileDownloadProcessor.m in Sources */,
-				455DEB43143DD8B4003203C1 /* VCDataResponseProcessor.m in Sources */,
+				452FDDE714133BAC000240B4 /* VCRequest.m in Sources */,
+				455DEB43143DD8B4003203C1 /* VCResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,9 +266,9 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
-				INFOPLIST_FILE = "Demo/Demo-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Demo/VCRequestHandler-Prefix.pch";
+				INFOPLIST_FILE = "Demo/VCRequestHandler-Info.plist";
+				PRODUCT_NAME = VCRequestHandler;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -285,9 +279,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
-				INFOPLIST_FILE = "Demo/Demo-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Demo/VCRequestHandler-Prefix.pch";
+				INFOPLIST_FILE = "Demo/VCRequestHandler-Info.plist";
+				PRODUCT_NAME = VCRequestHandler;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -296,7 +290,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		450ED18113A8C351008A23EB /* Build configuration list for PBXProject "Demo" */ = {
+		450ED18113A8C351008A23EB /* Build configuration list for PBXProject "VCRequestHandler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				450ED1A013A8C351008A23EB /* Debug */,
@@ -305,7 +299,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		450ED1A213A8C351008A23EB /* Build configuration list for PBXNativeTarget "Demo" */ = {
+		450ED1A213A8C351008A23EB /* Build configuration list for PBXNativeTarget "VCRequestHandler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				450ED1A313A8C351008A23EB /* Debug */,

@@ -26,9 +26,8 @@
 
 #import "DemoAppDelegate.h"
 
-#import "VCDataResponseProcessor.h"
+#import "VCResponseProcessor.h"
 #import "VCImageResponseProcessor.h"
-#import "VCFileDownloadProcessor.h"
 
 @implementation DemoAppDelegate
 
@@ -100,9 +99,9 @@
 - (IBAction)didTapGetGoogleResponseButton:(id)sender {
 	self.responseTextView.text = [NSString string];
 	
-	VCDataResponseProcessor *processor = [[[VCDataResponseProcessor alloc] init] autorelease];
+	VCResponseProcessor *processor = [[[VCResponseProcessor alloc] init] autorelease];
 	processor.tag = 1;
-	[[VCResponseFetcher sharedInstance] addObserver:self
+	[[VCRequestHandler sharedHandler] requestWithObserver:self
 												url:@"http://www.google.com"
 											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 								  responseProcessor:processor];
@@ -120,35 +119,21 @@
 		
 	VCImageResponseProcessor *processor = [[[VCImageResponseProcessor alloc] init] autorelease];
 	processor.tag = 2;
-	[[VCResponseFetcher sharedInstance] addObserver:self 
-												url:@"http://images.apple.com/home/images/promo_lion.png"
+	[[VCRequestHandler sharedHandler] requestWithObserver:self 
+												url:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"
 											  cache:NSURLRequestReturnCacheDataElseLoad
 								  responseProcessor:processor];
 }
 
-- (IBAction)didTapDownloadFileButton:(id)sender {
-	VCFileDownloadProcessor *processor = [[[VCFileDownloadProcessor alloc] init] autorelease];
-	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectoryPath = [paths objectAtIndex:0];
-	processor.filePath = [documentsDirectoryPath stringByAppendingPathComponent:@"file.png"];
-	
-	[[VCResponseFetcher sharedInstance] addObserver:self
-												url:@"http://f.cl.ly/items/341z2F3h2m1C0a0e291J/Beide.png"
-											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-								  responseProcessor:processor];
-}
 
+#pragma mark - VCRequestDelegate Methods
 
-
-
-#pragma mark - VCResponseFetchServiceDelegate Methods
-
--(void)didSucceedReceiveResponse:(VCDataResponseProcessor *)response {
-	
+- (void)didFinishRequest:(VCRequest *)request
+{
+	VCResponseProcessor *response = request.responseProcessor;
 	if (response.tag == 1 ) {
 		self.responseTextView.textColor = [UIColor blackColor];
-		VCDataResponseProcessor *processor = (VCDataResponseProcessor*)response;
+		VCResponseProcessor *processor = (VCResponseProcessor*)response;
 		NSString *stringResponse = [[NSString alloc] initWithData:processor.data encoding:NSUTF8StringEncoding];
 		self.responseTextView.text = stringResponse;
 		[stringResponse release];
@@ -159,9 +144,11 @@
 	}
 }
 
--(void)didFailReceiveResponse:(VCDataResponseProcessor *)response {
+- (void)didFailRequest:(VCRequest *)request
+{
+	VCResponseProcessor *response = request.responseProcessor;
 	self.responseTextView.textColor = [UIColor redColor];
-
+	
 	self.responseTextView.text = [NSString stringWithFormat:@"%@", [[response error]localizedDescription]];
 }
 

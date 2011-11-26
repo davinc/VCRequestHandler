@@ -1,8 +1,8 @@
 //
-//  VCResponseFetcher.h
-//  Demo
+//  VCRequest.h
+//  VCRequestHandler
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 04/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -25,32 +25,35 @@
 //  THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import "VCRequestDelegate.h"
 
-// Main Service
-#import "VCResponseFetchAsyncService.h"
-#import "VCResponseFetchServiceDelegate.h"
-#import "VCDataResponseProcessor.h"
+@class VCResponseProcessor;
 
-@interface VCResponseFetcher : NSObject {
-@private
-    NSOperationQueue *_networkOperationQueue;
+@interface VCRequest : NSOperation <NSURLConnectionDelegate> {
+	NSObject<VCRequestDelegate> *delegate;
+	VCResponseProcessor *responseProcessor;
+	NSString *url;
+	NSURLRequestCachePolicy cachePolicy;
+	NSString *method;
+	NSDictionary *allHTTPHeaderFields;
+	NSData *body;
+	
+	BOOL isExecuting;
+	BOOL isFinished;
 }
 
-+ (VCResponseFetcher*)sharedInstance;
+@property (nonatomic, assign) NSObject<VCRequestDelegate> *delegate;
+@property (nonatomic, retain) VCResponseProcessor *responseProcessor;
+@property (nonatomic, retain) NSString *url;
+@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
+@property (nonatomic, retain) NSDictionary *allHTTPHeaderFields;
+@property (nonatomic, retain) NSData *body;
+@property (nonatomic, retain) NSString *method;
+@property (nonatomic, assign) NSInteger tag;
 
-- (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate> *)observer
-										 url:(NSString *)url
-									   cache:(NSURLRequestCachePolicy)cache
-						   responseProcessor:(VCDataResponseProcessor *)processor;
-
-- (VCResponseFetchAsyncService *)addObserver:(NSObject<VCResponseFetchServiceDelegate> *)observer
-									  method:(NSString *)method
-										 url:(NSString *)url
-							 allHeaderFields:(NSDictionary *)allHeaderFields
-										body:(NSData *)body
-									   cache:(NSURLRequestCachePolicy)cache
-						   responseProcessor:(VCDataResponseProcessor *)processor;
-
-- (void)addOperation:(VCResponseFetchAsyncService *)service; // For adding any custom service
+-(void)didFinish;
+-(void)didFail;
+-(void)notifyStart;
+-(void)notifyFinish;
 
 @end

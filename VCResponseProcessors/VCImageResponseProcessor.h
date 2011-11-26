@@ -1,6 +1,6 @@
 //
 //  VCImageResponseProcessor.h
-//  Demo
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 15/06/11.
 //  
@@ -26,9 +26,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "VCDataResponseProcessor.h"
+#import "VCResponseProcessor.h"
 
-@interface VCImageResponseProcessor : VCDataResponseProcessor
+@interface VCImageResponseProcessor : VCResponseProcessor
 
 @property (nonatomic, retain) UIImage *image;
 

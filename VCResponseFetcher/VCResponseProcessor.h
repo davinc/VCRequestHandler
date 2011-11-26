@@ -1,6 +1,6 @@
 //
-//  VCDataResponseProcessor.h
-//  VCResponseFetcherTest
+//  VCResponseProcessor.h
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 4/7/11.
 //  
@@ -38,10 +38,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VCDataResponseProcessor : NSObject {
+@interface VCResponseProcessor : NSObject {
 	NSMutableData *_data;
 	NSError *_error;
-	NSInteger tag;
 	
 	// For download progress
 	long long expectedDataLength;
