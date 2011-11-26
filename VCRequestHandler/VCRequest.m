@@ -58,7 +58,6 @@
 -(void)start
 {
 	if (self.isCancelled) {
-		NSLog(@"Canceling in start");
 		[self notifyFinish];
 		return;
 	}
@@ -137,6 +136,8 @@
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
+#pragma mark Overriden
+
 -(BOOL)isConcurrent
 {
 	return NO;
@@ -152,6 +153,11 @@
 	return isFinished;
 }
 
+- (void)cancel
+{
+	self.delegate = nil;
+	[super cancel];
+}
 
 #pragma mark - NSOperationDelegate Methods
 
@@ -167,7 +173,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
 	if (self.isCancelled) {
-		NSLog(@"Canceling in didReceiveResponse");
 		[connection cancel];
 		[self didFail];
 		return;
@@ -179,7 +184,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData
 {
 	if (self.isCancelled) {
-		NSLog(@"Canceling in didReceiveData");
 		[connection cancel];
 		[self didFail];
 		return;
@@ -192,7 +196,6 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	if (self.isCancelled) {
-		NSLog(@"Canceling in connectionDidFinishLoading");
 		[connection cancel];
 		[self didFail];
 		return;
