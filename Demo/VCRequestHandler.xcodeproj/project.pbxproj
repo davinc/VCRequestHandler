@@ -14,11 +14,11 @@
 		450ED19913A8C351008A23EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19813A8C351008A23EB /* main.m */; };
 		450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 450ED19B13A8C351008A23EB /* DemoAppDelegate.m */; };
 		450ED19F13A8C351008A23EB /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450ED19D13A8C351008A23EB /* MainWindow.xib */; };
-		452FDDE714133BAC000240B4 /* VCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 452FDDE614133BAC000240B4 /* VCRequest.m */; };
-		455DEB43143DD8B4003203C1 /* VCResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 455DEB42143DD8B4003203C1 /* VCResponseProcessor.m */; };
+		456520FD1480BB4C00FC6B4B /* VCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 456520F71480BB4C00FC6B4B /* VCRequest.m */; };
+		456520FE1480BB4C00FC6B4B /* VCRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 456520FA1480BB4C00FC6B4B /* VCRequestHandler.m */; };
+		456520FF1480BB4C00FC6B4B /* VCResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 456520FC1480BB4C00FC6B4B /* VCResponseProcessor.m */; };
 		457AEBE713D5C190008A5583 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 457AEBE613D5C190008A5583 /* README.md */; };
 		45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */; };
-		45EC72E313AA7388007EA9D3 /* VCRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC72DF13AA7388007EA9D3 /* VCRequestHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,23 +26,23 @@
 		450ED18B13A8C351008A23EB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		450ED18D13A8C351008A23EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		450ED18F13A8C351008A23EB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		450ED19313A8C351008A23EB /* VCRequestHandler-Info.plist */ = {isa = PBXFileReference; path = "VCRequestHandler-Info.plist"; sourceTree = "<group>"; };
+		450ED19313A8C351008A23EB /* VCRequestHandler-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VCRequestHandler-Info.plist"; sourceTree = "<group>"; };
 		450ED19513A8C351008A23EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		450ED19713A8C351008A23EB /* VCRequestHandler-Prefix.pch */ = {isa = PBXFileReference; path = "VCRequestHandler-Prefix.pch"; sourceTree = "<group>"; };
+		450ED19713A8C351008A23EB /* VCRequestHandler-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VCRequestHandler-Prefix.pch"; sourceTree = "<group>"; };
 		450ED19813A8C351008A23EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		450ED19A13A8C351008A23EB /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		450ED19B13A8C351008A23EB /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
 		450ED19E13A8C351008A23EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		452FDDE514133BAC000240B4 /* VCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequest.h; sourceTree = "<group>"; };
-		452FDDE614133BAC000240B4 /* VCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequest.m; sourceTree = "<group>"; };
-		455DEB41143DD8B4003203C1 /* VCResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseProcessor.h; sourceTree = "<group>"; };
-		455DEB42143DD8B4003203C1 /* VCResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseProcessor.m; sourceTree = "<group>"; };
+		456520F61480BB4C00FC6B4B /* VCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequest.h; sourceTree = "<group>"; };
+		456520F71480BB4C00FC6B4B /* VCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequest.m; sourceTree = "<group>"; };
+		456520F81480BB4C00FC6B4B /* VCRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestDelegate.h; sourceTree = "<group>"; };
+		456520F91480BB4C00FC6B4B /* VCRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestHandler.h; sourceTree = "<group>"; };
+		456520FA1480BB4C00FC6B4B /* VCRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequestHandler.m; sourceTree = "<group>"; };
+		456520FB1480BB4C00FC6B4B /* VCResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseProcessor.h; sourceTree = "<group>"; };
+		456520FC1480BB4C00FC6B4B /* VCResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseProcessor.m; sourceTree = "<group>"; };
 		457AEBE613D5C190008A5583 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		45E41EFC13C77B1B0065B768 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
 		45E41EFD13C77B1B0065B768 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
-		45EC72DF13AA7388007EA9D3 /* VCRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequestHandler.m; sourceTree = "<group>"; };
-		45F2658013A8C42800574CF0 /* VCRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestHandler.h; sourceTree = "<group>"; };
-		45F2658313A8C42800574CF0 /* VCRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 		450ED19113A8C351008A23EB /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				45F2657C13A8C42800574CF0 /* VCResponseFetcher */,
+				456520F51480BB4C00FC6B4B /* VCRequestHandler */,
 				45E41EF913C77B1B0065B768 /* VCResponseProcessors */,
 				450ED19A13A8C351008A23EB /* DemoAppDelegate.h */,
 				450ED19B13A8C351008A23EB /* DemoAppDelegate.m */,
@@ -111,6 +111,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		456520F51480BB4C00FC6B4B /* VCRequestHandler */ = {
+			isa = PBXGroup;
+			children = (
+				456520F61480BB4C00FC6B4B /* VCRequest.h */,
+				456520F71480BB4C00FC6B4B /* VCRequest.m */,
+				456520F81480BB4C00FC6B4B /* VCRequestDelegate.h */,
+				456520F91480BB4C00FC6B4B /* VCRequestHandler.h */,
+				456520FA1480BB4C00FC6B4B /* VCRequestHandler.m */,
+				456520FB1480BB4C00FC6B4B /* VCResponseProcessor.h */,
+				456520FC1480BB4C00FC6B4B /* VCResponseProcessor.m */,
+			);
+			name = VCRequestHandler;
+			path = ../../VCRequestHandler;
+			sourceTree = "<group>";
+		};
 		45E41EF913C77B1B0065B768 /* VCResponseProcessors */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,21 +134,6 @@
 			);
 			name = VCResponseProcessors;
 			path = ../../VCResponseProcessors;
-			sourceTree = "<group>";
-		};
-		45F2657C13A8C42800574CF0 /* VCResponseFetcher */ = {
-			isa = PBXGroup;
-			children = (
-				45F2658013A8C42800574CF0 /* VCRequestHandler.h */,
-				45EC72DF13AA7388007EA9D3 /* VCRequestHandler.m */,
-				45F2658313A8C42800574CF0 /* VCRequestDelegate.h */,
-				452FDDE514133BAC000240B4 /* VCRequest.h */,
-				452FDDE614133BAC000240B4 /* VCRequest.m */,
-				455DEB41143DD8B4003203C1 /* VCResponseProcessor.h */,
-				455DEB42143DD8B4003203C1 /* VCResponseProcessor.m */,
-			);
-			name = VCResponseFetcher;
-			path = ../../VCResponseFetcher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,10 +198,10 @@
 			files = (
 				450ED19913A8C351008A23EB /* main.m in Sources */,
 				450ED19C13A8C351008A23EB /* DemoAppDelegate.m in Sources */,
-				45EC72E313AA7388007EA9D3 /* VCRequestHandler.m in Sources */,
 				45E41EFF13C77B1B0065B768 /* VCImageResponseProcessor.m in Sources */,
-				452FDDE714133BAC000240B4 /* VCRequest.m in Sources */,
-				455DEB43143DD8B4003203C1 /* VCResponseProcessor.m in Sources */,
+				456520FD1480BB4C00FC6B4B /* VCRequest.m in Sources */,
+				456520FE1480BB4C00FC6B4B /* VCRequestHandler.m in Sources */,
+				456520FF1480BB4C00FC6B4B /* VCResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
