@@ -49,5 +49,6 @@
 							  body:(NSData *)body
 							 cache:(NSURLRequestCachePolicy)cache
 				 responseProcessor:(VCResponseProcessor *)processor;
+- (void)requestWithRequest:(VCRequest *)request;
 
 @end

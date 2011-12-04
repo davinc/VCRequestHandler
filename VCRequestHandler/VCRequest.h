@@ -30,25 +30,25 @@
 @class VCResponseProcessor;
 
 @interface VCRequest : NSOperation <NSURLConnectionDelegate> {
-	NSObject<VCRequestDelegate> *delegate;
-	VCResponseProcessor *responseProcessor;
-	NSString *url;
-	NSURLRequestCachePolicy cachePolicy;
-	NSString *method;
-	NSDictionary *allHTTPHeaderFields;
-	NSData *body;
+	NSObject<VCRequestDelegate> *_delegate;
+	VCResponseProcessor *_responseProcessor;
+	NSString *_url;
+	NSURLRequestCachePolicy _cachePolicy;
+	NSString *_method;
+	NSDictionary *_allHTTPHeaderFields;
+	NSData *_body;
 	
-	BOOL isExecuting;
-	BOOL isFinished;
+	BOOL _isExecuting;
+	BOOL _isFinished;
 }
 
 @property (nonatomic, assign) NSObject<VCRequestDelegate> *delegate;
 @property (nonatomic, retain) VCResponseProcessor *responseProcessor;
-@property (nonatomic, retain) NSString *url;
+@property (nonatomic, copy) NSString *url;
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
-@property (nonatomic, retain) NSDictionary *allHTTPHeaderFields;
-@property (nonatomic, retain) NSData *body;
-@property (nonatomic, retain) NSString *method;
+@property (nonatomic, copy) NSDictionary *allHTTPHeaderFields;
+@property (nonatomic, copy) NSData *body;
+@property (nonatomic, copy) NSString *method;
 @property (nonatomic, assign) NSInteger tag;
 
 -(void)didFinish;

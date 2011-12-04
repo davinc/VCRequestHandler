@@ -31,8 +31,10 @@
 
 @protocol VCRequestDelegate <NSObject>
 
-@optional
+@required
 - (void)didFinishRequest:(VCRequest *)request;
+
+@optional
 - (void)didFailRequest:(VCRequest *)request;
 
 @end

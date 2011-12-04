@@ -28,6 +28,7 @@
 
 @interface VCRequestHandler()
 
+- (void)addOperation:(VCRequest *)operation;
 - (void)showNetworkActivityIndicator;
 - (void)hideNetworkActivityIndicatorIfRequired;
 
@@ -64,6 +65,8 @@
 	return sharedInstance;
 }
 
+#pragma mark - Public
+
 - (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
 							   url:(NSString*)url
 							 cache:(NSURLRequestCachePolicy)cache
@@ -78,9 +81,7 @@
 	operation.responseProcessor = processor;
 	operation.cachePolicy = cache;
 	
-	[_networkOperationQueue addOperation:operation];
-	
-	[self showNetworkActivityIndicator];
+	[self addOperation:operation];
 	
 	return [operation autorelease];
 }
@@ -105,20 +106,25 @@
 	operation.responseProcessor = processor;
 	operation.cachePolicy = cache;
 	
-	[_networkOperationQueue addOperation:operation];
-	
-	[self showNetworkActivityIndicator];
-	
+	[self addOperation:operation];
+
 	return [operation autorelease];
 }
 
-- (void)addOperation:(VCRequest *)service
+- (void)requestWithRequest:(VCRequest *)request
 {
-	[_networkOperationQueue addOperation:service];
-	[self showNetworkActivityIndicator];
+	if (request) {
+		[self addOperation:request];
+	}
 }
 
-#pragma mark - Private Methods
+#pragma mark - Private
+
+- (void)addOperation:(VCRequest *)operation
+{
+	[_networkOperationQueue addOperation:operation];
+	[self showNetworkActivityIndicator];
+}
 
 - (void)showNetworkActivityIndicator
 {

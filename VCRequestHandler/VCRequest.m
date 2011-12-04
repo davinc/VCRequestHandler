@@ -30,7 +30,14 @@
 
 @implementation VCRequest
 
-@synthesize delegate, url, responseProcessor, cachePolicy, allHTTPHeaderFields, body, method, tag;
+@synthesize delegate = _delegate;
+@synthesize url = _url;
+@synthesize responseProcessor = _responseProcessor;
+@synthesize cachePolicy = _cachePolicy;
+@synthesize allHTTPHeaderFields = _allHTTPHeaderFields;
+@synthesize body = _body;
+@synthesize method = _method;
+@synthesize tag = _tag;
 
 -(id)init
 {
@@ -47,11 +54,11 @@
 
 -(void)dealloc
 {
-	[url release], url = nil;
-	[responseProcessor release], responseProcessor = nil;
-	[allHTTPHeaderFields release], allHTTPHeaderFields = nil;
-	[body release], body = nil;
-	[method release], method = nil;
+	[_url release], _url = nil;
+	[_responseProcessor release], _responseProcessor = nil;
+	[_allHTTPHeaderFields release], _allHTTPHeaderFields = nil;
+	[_body release], _body = nil;
+	[_method release], _method = nil;
 	[super dealloc];
 }
 
@@ -90,7 +97,7 @@
 	
 	do {
 		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
-	} while (isExecuting);
+	} while (_isExecuting);
 	[autoreleasePool release], autoreleasePool = nil;
 }
 
@@ -121,8 +128,8 @@
 -(void)notifyStart 
 {
 	[self willChangeValueForKey:@"isExecuting"];
-	isExecuting = YES;
-	isFinished = NO;
+	_isExecuting = YES;
+	_isFinished = NO;
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
@@ -130,8 +137,8 @@
 {
 	[self willChangeValueForKey:@"isExecuting"];
 	[self willChangeValueForKey:@"isFinished"];
-	isExecuting = NO;
-	isFinished  = YES;
+	_isExecuting = NO;
+	_isFinished  = YES;
 	[self didChangeValueForKey:@"isFinished"];
 	[self didChangeValueForKey:@"isExecuting"];
 }
@@ -145,12 +152,12 @@
 
 -(BOOL)isExecuting
 {
-	return isExecuting;
+	return _isExecuting;
 }
 
 -(BOOL)isFinished
 {
-	return isFinished;
+	return _isFinished;
 }
 
 - (void)cancel
