@@ -1,8 +1,8 @@
 //
-//  VCResponseProcessor.m
+//  VCRequestFactory.h
 //  VCRequestHandler
 //
-//  Created by Vinay Chavan on 4/7/11.
+//  Created by Vinay Chavan on 25/12/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,53 +24,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VCResponseProcessor.h"
+#import <Foundation/Foundation.h>
 
-@implementation VCResponseProcessor
+@class VCRequest;
+@class VCResponseProcessor;
 
-@synthesize data = _data, error = _error;
-@synthesize expectedDataLength, receivedDataLength;
+@protocol VCRequestDelegate;
 
--(id)init
-{
-	self = [super init];
-	if (self) {
-		_data = nil;
-		_error = nil;
-	}
-	return self;
-}
+@interface VCRequestFactory : NSObject
 
--(void)dealloc
-{
-	[_data release], _data = nil;
-	[_error release], _error = nil;
-	[super dealloc];
-}
++ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
+							   url:(NSString *)url
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor;
 
-#pragma mark - Public Method
-
-- (void)willStartReceivingData
-{
-	_data = [[NSMutableData alloc] init];
-}
-
-- (void)didReceiveData:(NSData*)data
-{
-	[_data appendData:data];
-}
-
-- (void)didFinishReceivingData
-{
-	// Process received data
-#if DEBUG
-	NSLog(@"%@", [[[NSString alloc]initWithData:self.data encoding:NSUTF8StringEncoding]autorelease]);
-#endif
-}
-
-- (void)didFailReceivingDataWithError:(NSError *)error
-{
-	self.error = error;
-}
-
++ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
+							method:(NSString *)method
+							   url:(NSString *)url
+				   allHeaderFields:(NSDictionary *)allHeaderFields
+							  body:(NSData *)body
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor;
 @end

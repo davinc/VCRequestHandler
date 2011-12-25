@@ -49,7 +49,6 @@
 
 @property (nonatomic, readonly) NSData *data;        // Received data
 @property (nonatomic, retain) NSError *error;        // error is nil if the request completes with success, else holds an error that occured during the process.
-@property (nonatomic, assign) NSInteger tag;         // used to identify the request.
 @property (nonatomic, assign) long long expectedDataLength;
 @property (nonatomic, assign) long long receivedDataLength;
 

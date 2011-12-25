@@ -1,8 +1,8 @@
 //
-//  VCRequestHandler.h
+//  VCRequestFactory.m
 //  VCRequestHandler
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 25/12/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,19 +24,46 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "VCRequestFactory.h"
 
-// Main Service
 #import "VCRequest.h"
 #import "VCResponseProcessor.h"
+#import "VCRequestDelegate.h"
 
-@interface VCRequestHandler : NSObject {
-@private
-    NSOperationQueue *_networkOperationQueue;
+@implementation VCRequestFactory
+
++ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
+							   url:(NSString*)url
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor
+{
+	VCRequest *operation = [[VCRequest alloc] init];
+	operation.delegate = observer;
+	operation.url = url;
+	operation.responseProcessor = processor;
+	operation.cachePolicy = cache;
+	
+	return [operation autorelease];
 }
 
-+ (VCRequestHandler*)sharedHandler;
-
-- (void)requestWithRequest:(VCRequest *)request;
++ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
+							method:(NSString*)method
+							   url:(NSString*)url
+				   allHeaderFields:(NSDictionary*)allHeaderFields
+							  body:(NSData*)body
+							 cache:(NSURLRequestCachePolicy)cache
+				 responseProcessor:(VCResponseProcessor *)processor
+{
+	VCRequest *operation = [[VCRequest alloc] init];
+	operation.delegate = observer;
+	operation.method = method;
+	operation.url = url;
+	operation.allHTTPHeaderFields = allHeaderFields;
+	operation.body = body;
+	operation.responseProcessor = processor;
+	operation.cachePolicy = cache;
+	
+	return [operation autorelease];
+}
 
 @end

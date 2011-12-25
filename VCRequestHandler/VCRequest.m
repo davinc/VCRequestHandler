@@ -79,7 +79,7 @@
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
 														   cachePolicy:self.cachePolicy
-													   timeoutInterval:5];
+													   timeoutInterval:30];
 	
 	if (self.method) {
 		[request setHTTPMethod:self.method];

@@ -27,6 +27,7 @@
 #import "DemoAppDelegate.h"
 
 #import "VCResponseProcessor.h"
+#import "VCRequestFactory.h"
 #import "VCImageResponseProcessor.h"
 
 @implementation DemoAppDelegate
@@ -99,30 +100,23 @@
 - (IBAction)didTapGetGoogleResponseButton:(id)sender {
 	self.responseTextView.text = [NSString string];
 	
-	VCResponseProcessor *processor = [[[VCResponseProcessor alloc] init] autorelease];
-	processor.tag = 1;
-	[[VCRequestHandler sharedHandler] requestWithObserver:self
-												url:@"http://www.google.com"
-											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-								  responseProcessor:processor];
-//	[[VCResponseFetcher sharedInstance] addObserver:self
-//											 method:[NSString stringWithString:@"POST"] 
-//												url:@"http://posttestserver.com/post.php"
-//									allHeaderFields:[NSDictionary dictionaryWithObjectsAndKeys:@"UTF8", @"Content-Type", nil]
-//											   body:[[NSString stringWithString:@"\r\nTESTING DATA\r\n"] dataUsingEncoding:NSUTF8StringEncoding]
-//											  cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-//								  responseProcessor:processor];
+	VCRequest *request = [VCRequestFactory requestWithObserver:self
+														   url:@"http://www.google.com"
+														 cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+											 responseProcessor:[[[VCResponseProcessor alloc] init] autorelease]];
+	request.tag = 1;
+	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
 
 - (IBAction)didTapGetImageResponseButton:(UIButton*)sender {
 	self.responseImageView.image = nil;
 		
-	VCImageResponseProcessor *processor = [[[VCImageResponseProcessor alloc] init] autorelease];
-	processor.tag = 2;
-	[[VCRequestHandler sharedHandler] requestWithObserver:self 
-												url:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"
-											  cache:NSURLRequestReturnCacheDataElseLoad
-								  responseProcessor:processor];
+	VCRequest *request = [VCRequestFactory requestWithObserver:self 
+														   url:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"
+														 cache:NSURLRequestReturnCacheDataElseLoad
+											 responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
+	request.tag = 2;
+	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
 
 
@@ -130,16 +124,15 @@
 
 - (void)didFinishRequest:(VCRequest *)request
 {
-	VCResponseProcessor *response = request.responseProcessor;
-	if (response.tag == 1 ) {
+	if (request.tag == 1 ) {
 		self.responseTextView.textColor = [UIColor blackColor];
-		VCResponseProcessor *processor = (VCResponseProcessor*)response;
+		VCResponseProcessor *processor = (VCResponseProcessor*)request.responseProcessor;
 		NSString *stringResponse = [[NSString alloc] initWithData:processor.data encoding:NSUTF8StringEncoding];
 		self.responseTextView.text = stringResponse;
 		[stringResponse release];
 	}
-	else if(response.tag == 2) {
-		VCImageResponseProcessor *processor = (VCImageResponseProcessor *)response;
+	else if(request.tag == 2) {
+		VCImageResponseProcessor *processor = (VCImageResponseProcessor *)request.responseProcessor;
 		self.responseImageView.image = processor.image;
 	}
 }

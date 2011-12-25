@@ -67,50 +67,6 @@
 
 #pragma mark - Public
 
-- (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
-							   url:(NSString*)url
-							 cache:(NSURLRequestCachePolicy)cache
-				 responseProcessor:(VCResponseProcessor *)processor
-{
-#if DEBUG
-	NSLog(@"%@", url);
-#endif
-	VCRequest *operation = [[VCRequest alloc] init];
-	operation.delegate = observer;
-	operation.url = url;
-	operation.responseProcessor = processor;
-	operation.cachePolicy = cache;
-	
-	[self addOperation:operation];
-	
-	return [operation autorelease];
-}
-
-- (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
-							method:(NSString*)method
-							   url:(NSString*)url
-				   allHeaderFields:(NSDictionary*)allHeaderFields
-							  body:(NSData*)body
-							 cache:(NSURLRequestCachePolicy)cache
-				 responseProcessor:(VCResponseProcessor *)processor
-{
-#if DEBUG
-	NSLog(@"%@", url);
-#endif
-	VCRequest *operation = [[VCRequest alloc] init];
-	operation.delegate = observer;
-	operation.method = method;
-	operation.url = url;
-	operation.allHTTPHeaderFields = allHeaderFields;
-	operation.body = body;
-	operation.responseProcessor = processor;
-	operation.cachePolicy = cache;
-	
-	[self addOperation:operation];
-
-	return [operation autorelease];
-}
-
 - (void)requestWithRequest:(VCRequest *)request
 {
 	if (request) {
