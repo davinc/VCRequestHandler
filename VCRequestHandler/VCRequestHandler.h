@@ -28,6 +28,8 @@
 
 // Main Service
 #import "VCRequest.h"
+#import "VCRequestFactory.h"
+#import "VCRequestDelegate.h"
 #import "VCResponseProcessor.h"
 
 @interface VCRequestHandler : NSObject {
