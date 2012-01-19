@@ -33,13 +33,13 @@
 @implementation VCRequestFactory
 
 + (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
-							   url:(NSString*)url
+							   URL:(NSURL*)URL
 							 cache:(NSURLRequestCachePolicy)cache
 				 responseProcessor:(VCResponseProcessor *)processor
 {
 	VCRequest *operation = [[VCRequest alloc] init];
 	operation.delegate = observer;
-	operation.url = url;
+	operation.URL = URL;
 	operation.responseProcessor = processor;
 	operation.cachePolicy = cache;
 	
@@ -48,7 +48,7 @@
 
 + (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
 							method:(NSString*)method
-							   url:(NSString*)url
+							   URL:(NSURL*)URL
 				   allHeaderFields:(NSDictionary*)allHeaderFields
 							  body:(NSData*)body
 							 cache:(NSURLRequestCachePolicy)cache
@@ -57,7 +57,7 @@
 	VCRequest *operation = [[VCRequest alloc] init];
 	operation.delegate = observer;
 	operation.method = method;
-	operation.url = url;
+	operation.URL = URL;
 	operation.allHTTPHeaderFields = allHeaderFields;
 	operation.body = body;
 	operation.responseProcessor = processor;

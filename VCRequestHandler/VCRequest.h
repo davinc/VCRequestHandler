@@ -32,7 +32,7 @@
 @interface VCRequest : NSOperation <NSURLConnectionDelegate> {
 	NSObject<VCRequestDelegate> *_delegate;
 	VCResponseProcessor *_responseProcessor;
-	NSString *_url;
+	NSURL *_URL;
 	NSURLRequestCachePolicy _cachePolicy;
 	NSString *_method;
 	NSDictionary *_allHTTPHeaderFields;
@@ -44,7 +44,7 @@
 
 @property (nonatomic, assign) NSObject<VCRequestDelegate> *delegate;
 @property (nonatomic, retain) VCResponseProcessor *responseProcessor;
-@property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSURL *URL;
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 @property (nonatomic, copy) NSDictionary *allHTTPHeaderFields;
 @property (nonatomic, copy) NSData *body;

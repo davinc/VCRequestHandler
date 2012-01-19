@@ -34,13 +34,13 @@
 @interface VCRequestFactory : NSObject
 
 + (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
-							   url:(NSString *)url
+							   URL:(NSURL *)URL
 							 cache:(NSURLRequestCachePolicy)cache
 				 responseProcessor:(VCResponseProcessor *)processor;
 
 + (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
 							method:(NSString *)method
-							   url:(NSString *)url
+							   URL:(NSURL *)URL
 				   allHeaderFields:(NSDictionary *)allHeaderFields
 							  body:(NSData *)body
 							 cache:(NSURLRequestCachePolicy)cache

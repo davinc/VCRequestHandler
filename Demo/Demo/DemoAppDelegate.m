@@ -101,18 +101,29 @@
 	self.responseTextView.text = [NSString string];
 	
 	VCRequest *request = [VCRequestFactory requestWithObserver:self
-														   url:@"http://www.google.com"
+														   URL:[NSURL URLWithString:@"http://www.google.com"]
 														 cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 											 responseProcessor:[[[VCResponseProcessor alloc] init] autorelease]];
 	request.tag = 1;
 	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
 
-- (IBAction)didTapGetImageResponseButton:(UIButton*)sender {
+- (IBAction)didTapGetRemoteImageResponseButton:(UIButton*)sender {
 	self.responseImageView.image = nil;
 		
 	VCRequest *request = [VCRequestFactory requestWithObserver:self 
-														   url:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"
+														   URL:[NSURL URLWithString:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"]
+														 cache:NSURLRequestReturnCacheDataElseLoad
+											 responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
+	request.tag = 2;
+	[[VCRequestHandler sharedHandler] requestWithRequest:request];
+}
+
+- (IBAction)didTapGetLocalImageResponseButton:(UIButton*)sender {
+	self.responseImageView.image = nil;
+	
+	VCRequest *request = [VCRequestFactory requestWithObserver:self 
+														   URL:[[NSBundle mainBundle] URLForResource:@"localImage" withExtension:@"jpg"]
 														 cache:NSURLRequestReturnCacheDataElseLoad
 											 responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
 	request.tag = 2;

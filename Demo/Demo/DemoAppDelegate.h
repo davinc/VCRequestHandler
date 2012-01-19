@@ -38,5 +38,6 @@
 @property (nonatomic, retain) IBOutlet UIImageView *responseImageView;
 
 - (IBAction)didTapGetGoogleResponseButton:(id)sender;
-- (IBAction)didTapGetImageResponseButton:(id)sender;
+- (IBAction)didTapGetRemoteImageResponseButton:(id)sender;
+- (IBAction)didTapGetLocalImageResponseButton:(id)sender;
 @end

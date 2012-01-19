@@ -31,7 +31,7 @@
 @implementation VCRequest
 
 @synthesize delegate = _delegate;
-@synthesize url = _url;
+@synthesize URL = _URL;
 @synthesize responseProcessor = _responseProcessor;
 @synthesize cachePolicy = _cachePolicy;
 @synthesize allHTTPHeaderFields = _allHTTPHeaderFields;
@@ -44,7 +44,7 @@
 	self = [super init];
 	if (self) {
 		self.delegate = nil;
-		self.url = nil;
+		self.URL = nil;
 		self.responseProcessor = nil;
 		self.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
 		self.allHTTPHeaderFields = nil;
@@ -54,7 +54,7 @@
 
 -(void)dealloc
 {
-	[_url release], _url = nil;
+	[_URL release], _URL = nil;
 	[_responseProcessor release], _responseProcessor = nil;
 	[_allHTTPHeaderFields release], _allHTTPHeaderFields = nil;
 	[_body release], _body = nil;
@@ -69,7 +69,7 @@
 		return;
 	}
 	
-	if (self.url == nil) {
+	if (self.URL == nil) {
 		[self notifyFinish];
 		return;	
 	}
@@ -77,7 +77,7 @@
 	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
 	[self notifyStart];
 	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.URL
 														   cachePolicy:self.cachePolicy
 													   timeoutInterval:30];
 	
