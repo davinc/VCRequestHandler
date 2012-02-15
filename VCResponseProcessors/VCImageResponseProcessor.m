@@ -31,7 +31,7 @@
 
 @synthesize image = _image;
 
--(id)init
+- (id)init
 {
 	self = [super init];
 	if (self) {
@@ -40,7 +40,7 @@
 	return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
 	[_image release], _image = nil;
 	[super dealloc];

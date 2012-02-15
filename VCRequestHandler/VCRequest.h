@@ -51,9 +51,9 @@
 @property (nonatomic, copy) NSString *method;
 @property (nonatomic, assign) NSInteger tag;
 
--(void)didFinish;
--(void)didFail;
--(void)notifyStart;
--(void)notifyFinish;
+- (void)didFinish;
+- (void)didFail;
+- (void)notifyStart;
+- (void)notifyFinish;
 
 @end

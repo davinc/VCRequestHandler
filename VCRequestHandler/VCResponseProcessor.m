@@ -31,7 +31,7 @@
 @synthesize data = _data, error = _error;
 @synthesize expectedDataLength, receivedDataLength;
 
--(id)init
+- (id)init
 {
 	self = [super init];
 	if (self) {
@@ -41,7 +41,7 @@
 	return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
 	[_data release], _data = nil;
 	[_error release], _error = nil;

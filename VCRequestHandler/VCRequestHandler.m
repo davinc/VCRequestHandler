@@ -53,7 +53,7 @@
 	[super dealloc];
 }
 
-+(VCRequestHandler*)sharedHandler 
++ (VCRequestHandler*)sharedHandler 
 {
 	static VCRequestHandler *sharedInstance = nil;
 	

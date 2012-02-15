@@ -39,7 +39,7 @@
 @synthesize method = _method;
 @synthesize tag = _tag;
 
--(id)init
+- (id)init
 {
 	self = [super init];
 	if (self) {
@@ -52,7 +52,7 @@
 	return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
 	[_URL release], _URL = nil;
 	[_responseProcessor release], _responseProcessor = nil;
@@ -62,7 +62,7 @@
 	[super dealloc];
 }
 
--(void)start
+- (void)start
 {
 	if (self.isCancelled) {
 		[self notifyFinish];
@@ -103,7 +103,7 @@
 
 #pragma mark - Private Methods
 
--(void)didFinish
+- (void)didFinish
 {
 	if ([self.delegate respondsToSelector:@selector(didFinishRequest:)]) 
 	{
@@ -114,7 +114,7 @@
 	[self notifyFinish];
 }
 
--(void)didFail
+- (void)didFail
 {
 	if ([self.delegate respondsToSelector:@selector(didFailRequest:)])
 	{
@@ -125,7 +125,7 @@
 	[self notifyFinish];
 }
 
--(void)notifyStart 
+- (void)notifyStart 
 {
 	[self willChangeValueForKey:@"isExecuting"];
 	_isExecuting = YES;
@@ -133,7 +133,7 @@
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
--(void)notifyFinish 
+- (void)notifyFinish 
 {
 	[self willChangeValueForKey:@"isExecuting"];
 	[self willChangeValueForKey:@"isFinished"];
@@ -145,17 +145,17 @@
 
 #pragma mark Overriden
 
--(BOOL)isConcurrent
+- (BOOL)isConcurrent
 {
 	return NO;
 }
 
--(BOOL)isExecuting
+- (BOOL)isExecuting
 {
 	return _isExecuting;
 }
 
--(BOOL)isFinished
+- (BOOL)isFinished
 {
 	return _isFinished;
 }

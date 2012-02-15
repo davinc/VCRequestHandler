@@ -9,10 +9,12 @@ All you need to do is get started with predefined processors i.e. 'VCResponsePro
 # Usage
 Add 'VCRequestHandler.h' to the header file, and the implementation class should follow 'VCRequestDelegate' protocol, add respective data processor headers to the implementation file and call following method,
 <pre>
-    [[VCRequestHandler sharedHandler] requestWithObserver:self
-                                                      URL:[NSURL URLWithString:@"http://www.google.com"]
-                                                    cache:VCResponseFetchNoCache
-                                        responseProcessor:[[[CustomResponseProcessor alloc] init] autorelease]];
+	VCRequest *request = [VCRequestFactory requestWithObserver:self
+														   URL:[NSURL URLWithString:@"http://www.google.com"]
+														 cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+											 responseProcessor:[[[VCResponseProcessor alloc] init] autorelease]];
+	request.tag = 1;
+	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 </pre>
 
 When removing a view or deallocating a delegate of request, Do not forget to set request delegate to nil.
