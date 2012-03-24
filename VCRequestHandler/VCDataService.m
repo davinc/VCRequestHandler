@@ -1,8 +1,8 @@
 //
-//  VCRequestHandler.h
+//  VCDataService.m
 //  VCRequestHandler
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 4/7/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,21 +24,80 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-
-// Main Service
-#import "VCRequest.h"
-#import "VCRequestFactory.h"
-#import "VCRequestDelegate.h"
 #import "VCDataService.h"
 
-@interface VCRequestHandler : NSObject {
-@private
-    NSOperationQueue *_networkOperationQueue;
+@implementation VCDataService
+
+@synthesize data = _data, error = _error;
+@synthesize expectedDataLength, receivedDataLength;
+
+- (id)init
+{
+	self = [super init];
+	if (self) {
+		_data = nil;
+		_error = nil;
+	}
+	return self;
 }
 
-+ (VCRequestHandler*)sharedHandler;
+- (void)dealloc
+{
+	[_data release], _data = nil;
+	[_error release], _error = nil;
+	[super dealloc];
+}
 
-- (void)requestWithRequest:(VCRequest *)request;
+#pragma mark - VCRequestSource
+
+- (NSURL *)URL
+{
+	return nil;
+}
+
+- (VCRequestMethod)method
+{
+	return VCGETRequest;
+}
+
+- (NSURLRequestCachePolicy)cachePolicy
+{
+	return NSURLRequestReloadIgnoringCacheData;
+}
+
+- (NSDictionary *)allHTTPHeaderFields
+{
+	return nil;
+}
+
+- (NSData *)body
+{
+	return nil;
+}
+
+#pragma mark - VCResponseProcessor
+
+- (void)willStartReceivingData
+{
+	_data = [[NSMutableData alloc] init];
+}
+
+- (void)didReceiveData:(NSData*)data
+{
+	[_data appendData:data];
+}
+
+- (void)didFinishReceivingData
+{
+	// Process received data
+#if DEBUG
+	NSLog(@"%@", [[[NSString alloc]initWithData:self.data encoding:NSUTF8StringEncoding]autorelease]);
+#endif
+}
+
+- (void)didFailReceivingDataWithError:(NSError *)error
+{
+	self.error = error;
+}
 
 @end

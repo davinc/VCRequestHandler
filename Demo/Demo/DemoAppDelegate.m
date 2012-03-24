@@ -26,15 +26,14 @@
 
 #import "DemoAppDelegate.h"
 
-#import "VCResponseProcessor.h"
+#import "VCDataService.h"
 #import "VCRequestFactory.h"
-#import "VCImageResponseProcessor.h"
+#import "VCImageService.h"
 
 @implementation DemoAppDelegate
 
 
 @synthesize window=_window;
-@synthesize responseTextView = _responseTextView;
 @synthesize responseImageView = _responseImageView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -97,24 +96,11 @@
 
 #pragma mark - Action Methods
 
-- (IBAction)didTapGetGoogleResponseButton:(id)sender {
-	self.responseTextView.text = [NSString string];
-	
-	VCRequest *request = [VCRequestFactory requestWithObserver:self
-														   URL:[NSURL URLWithString:@"http://www.google.com"]
-														 cache:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-											 responseProcessor:[[[VCResponseProcessor alloc] init] autorelease]];
-	request.tag = 1;
-	[[VCRequestHandler sharedHandler] requestWithRequest:request];
-}
-
 - (IBAction)didTapGetRemoteImageResponseButton:(UIButton*)sender {
 	self.responseImageView.image = nil;
 		
 	VCRequest *request = [VCRequestFactory requestWithObserver:self 
-														   URL:[NSURL URLWithString:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"]
-														 cache:NSURLRequestReturnCacheDataElseLoad
-											 responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
+												   dataService:[[[VCImageService alloc] initWithURL:[NSURL URLWithString:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"]] autorelease]];
 	request.tag = 2;
 	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
@@ -123,9 +109,7 @@
 	self.responseImageView.image = nil;
 	
 	VCRequest *request = [VCRequestFactory requestWithObserver:self 
-														   URL:[[NSBundle mainBundle] URLForResource:@"localImage" withExtension:@"jpg"]
-														 cache:NSURLRequestReturnCacheDataElseLoad
-											 responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
+												   dataService:[[[VCImageService alloc] initWithURL:[[NSBundle mainBundle] URLForResource:@"localImage" withExtension:@"jpg"]] autorelease]];
 	request.tag = 2;
 	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
@@ -135,25 +119,21 @@
 
 - (void)didFinishRequest:(VCRequest *)request
 {
-	if (request.tag == 1 ) {
-		self.responseTextView.textColor = [UIColor blackColor];
-		VCResponseProcessor *processor = (VCResponseProcessor*)request.responseProcessor;
-		NSString *stringResponse = [[NSString alloc] initWithData:processor.data encoding:NSUTF8StringEncoding];
-		self.responseTextView.text = stringResponse;
-		[stringResponse release];
-	}
-	else if(request.tag == 2) {
-		VCImageResponseProcessor *processor = (VCImageResponseProcessor *)request.responseProcessor;
+	if(request.tag == 2) {
+		VCImageService *processor = (VCImageService *)request.dataService;
 		self.responseImageView.image = processor.image;
 	}
 }
 
 - (void)didFailRequest:(VCRequest *)request
 {
-	VCResponseProcessor *response = request.responseProcessor;
-	self.responseTextView.textColor = [UIColor redColor];
-	
-	self.responseTextView.text = [NSString stringWithFormat:@"%@", [[response error]localizedDescription]];
+	VCDataService *response = request.dataService;
+
+	[[[[UIAlertView alloc] initWithTitle:@"Error"
+								 message:[[response error] localizedDescription]
+								delegate:nil
+					   cancelButtonTitle:@"Ok"
+					   otherButtonTitles:nil] autorelease] show];
 }
 
 @end

@@ -1,6 +1,6 @@
 //
-//  DemoAppDelegate.h
-//  Demo
+//  VCImageResponseProcessor.h
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 15/06/11.
 //  
@@ -24,18 +24,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-#import "VCRequestHandler.h"
+#import "VCDataService.h"
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCRequestDelegate> {	
-	UITextView *_responseTextView;
-	UIImageView *_responseImageView;
-}
+@interface VCImageService : VCDataService
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UIImageView *responseImageView;
+- (id)initWithURL:(NSURL *)imageURL;
 
-- (IBAction)didTapGetRemoteImageResponseButton:(id)sender;
-- (IBAction)didTapGetLocalImageResponseButton:(id)sender;
+@property (nonatomic, readonly) NSURL *imageURL;
+@property (nonatomic, retain) UIImage *image;
+
 @end

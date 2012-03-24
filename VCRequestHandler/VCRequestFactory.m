@@ -27,42 +27,17 @@
 #import "VCRequestFactory.h"
 
 #import "VCRequest.h"
-#import "VCResponseProcessor.h"
+#import "VCDataService.h"
 #import "VCRequestDelegate.h"
 
 @implementation VCRequestFactory
 
-+ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
-							   URL:(NSURL*)URL
-							 cache:(NSURLRequestCachePolicy)cache
-				 responseProcessor:(VCResponseProcessor *)processor
++ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
+					   dataService:(VCDataService *)service
 {
 	VCRequest *operation = [[VCRequest alloc] init];
 	operation.delegate = observer;
-	operation.URL = URL;
-	operation.responseProcessor = processor;
-	operation.cachePolicy = cache;
-	
-	return [operation autorelease];
-}
-
-+ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate>*)observer
-							method:(NSString*)method
-							   URL:(NSURL*)URL
-				   allHeaderFields:(NSDictionary*)allHeaderFields
-							  body:(NSData*)body
-							 cache:(NSURLRequestCachePolicy)cache
-				 responseProcessor:(VCResponseProcessor *)processor
-{
-	VCRequest *operation = [[VCRequest alloc] init];
-	operation.delegate = observer;
-	operation.method = method;
-	operation.URL = URL;
-	operation.allHTTPHeaderFields = allHeaderFields;
-	operation.body = body;
-	operation.responseProcessor = processor;
-	operation.cachePolicy = cache;
-	
+	operation.dataService = service;
 	return [operation autorelease];
 }
 

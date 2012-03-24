@@ -1,6 +1,6 @@
 //
-//  DemoAppDelegate.h
-//  Demo
+//  VCImageResponseProcessor.m
+//  VCRequestHandler
 //
 //  Created by Vinay Chavan on 15/06/11.
 //  
@@ -24,18 +24,48 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "VCImageService.h"
 
-#import "VCRequestHandler.h"
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCRequestDelegate> {	
-	UITextView *_responseTextView;
-	UIImageView *_responseImageView;
+@implementation VCImageService
+
+@synthesize imageURL = _imageURL;
+@synthesize image = _image;
+
+- (id)init
+{
+	NSLog(@"Allocation Error: Make use of initWithURL:(NSURL *)imageURL");
+	return nil;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UIImageView *responseImageView;
+- (id)initWithURL:(NSURL *)imageURL
+{
+	self = [super init];
+	if (self) {
+		_image = nil;
+		_imageURL = [imageURL retain];
+	}
+	return self;
+}
 
-- (IBAction)didTapGetRemoteImageResponseButton:(id)sender;
-- (IBAction)didTapGetLocalImageResponseButton:(id)sender;
+- (void)dealloc
+{
+	[_image release], _image = nil;
+	[_imageURL release], _imageURL = nil;
+	[super dealloc];
+}
+
+#pragma mark - Public Method
+
+- (NSURL *)URL
+{
+	return _imageURL;
+}
+
+- (void)didFinishReceivingData
+{
+	// Process received data
+	self.image = [UIImage imageWithData:self.data];
+}
+
 @end

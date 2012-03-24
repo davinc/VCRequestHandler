@@ -27,7 +27,7 @@
 #import <Foundation/Foundation.h>
 
 @class VCRequest;
-@class VCResponseProcessor;
+@class VCDataService;
 
 @protocol VCRequestDelegate <NSObject>
 

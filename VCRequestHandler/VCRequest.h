@@ -27,28 +27,20 @@
 #import <Foundation/Foundation.h>
 #import "VCRequestDelegate.h"
 
-@class VCResponseProcessor;
+@class VCDataService;
 
 @interface VCRequest : NSOperation <NSURLConnectionDelegate> {
 	NSObject<VCRequestDelegate> *_delegate;
-	VCResponseProcessor *_responseProcessor;
-	NSURL *_URL;
-	NSURLRequestCachePolicy _cachePolicy;
-	NSString *_method;
-	NSDictionary *_allHTTPHeaderFields;
-	NSData *_body;
+	VCDataService *_dataService;
 	
 	BOOL _isExecuting;
 	BOOL _isFinished;
 }
 
+- (id)initWithService:(VCDataService *)service;
+
 @property (nonatomic, assign) NSObject<VCRequestDelegate> *delegate;
-@property (nonatomic, retain) VCResponseProcessor *responseProcessor;
-@property (nonatomic, copy) NSURL *URL;
-@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
-@property (nonatomic, copy) NSDictionary *allHTTPHeaderFields;
-@property (nonatomic, copy) NSData *body;
-@property (nonatomic, copy) NSString *method;
+@property (nonatomic, retain) VCDataService *dataService;
 @property (nonatomic, assign) NSInteger tag;
 
 - (void)didFinish;

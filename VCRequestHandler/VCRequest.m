@@ -26,39 +26,27 @@
 
 #import "VCRequest.h"
 
-#import "VCResponseProcessor.h"
+#import "VCDataService.h"
 
 @implementation VCRequest
 
 @synthesize delegate = _delegate;
-@synthesize URL = _URL;
-@synthesize responseProcessor = _responseProcessor;
-@synthesize cachePolicy = _cachePolicy;
-@synthesize allHTTPHeaderFields = _allHTTPHeaderFields;
-@synthesize body = _body;
-@synthesize method = _method;
+@synthesize dataService = _dataService;
 @synthesize tag = _tag;
 
-- (id)init
+- (id)initWithService:(VCDataService *)service
 {
 	self = [super init];
 	if (self) {
 		self.delegate = nil;
-		self.URL = nil;
-		self.responseProcessor = nil;
-		self.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-		self.allHTTPHeaderFields = nil;
+		self.dataService = service;
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	[_URL release], _URL = nil;
-	[_responseProcessor release], _responseProcessor = nil;
-	[_allHTTPHeaderFields release], _allHTTPHeaderFields = nil;
-	[_body release], _body = nil;
-	[_method release], _method = nil;
+	[_dataService release], _dataService = nil;
 	[super dealloc];
 }
 
@@ -69,7 +57,7 @@
 		return;
 	}
 	
-	if (self.URL == nil) {
+	if ([self.dataService URL] == nil) {
 		[self notifyFinish];
 		return;	
 	}
@@ -77,19 +65,19 @@
 	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
 	[self notifyStart];
 	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.URL
-														   cachePolicy:self.cachePolicy
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.dataService URL]
+														   cachePolicy:[self.dataService cachePolicy]
 													   timeoutInterval:30];
 	
-	if (self.method) {
-		[request setHTTPMethod:self.method];
-	}
-	if (self.allHTTPHeaderFields) {
-		[request setAllHTTPHeaderFields:self.allHTTPHeaderFields];
-	}
-	if (self.body) {
-		[request setHTTPBody:self.body];
-	}
+//	if (self.method) {
+//		[request setHTTPMethod:[self.responseProcessor method]];
+//	}
+//	if (self.allHTTPHeaderFields) {
+//		[request setAllHTTPHeaderFields:self.allHTTPHeaderFields];
+//	}
+//	if (self.body) {
+//		[request setHTTPBody:self.body];
+//	}
 	
 	NSURLConnection *connection = [NSURLConnection connectionWithRequest:request
 																delegate:self];
@@ -184,8 +172,8 @@
 		[self didFail];
 		return;
 	}
-	self.responseProcessor.expectedDataLength = [response expectedContentLength];
-	[self.responseProcessor willStartReceivingData];
+	self.dataService.expectedDataLength = [response expectedContentLength];
+	[self.dataService willStartReceivingData];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData
@@ -196,8 +184,8 @@
 		return;
 	}
 	
-	self.responseProcessor.receivedDataLength += [receivedData length];
-	[self.responseProcessor didReceiveData:receivedData];
+	self.dataService.receivedDataLength += [receivedData length];
+	[self.dataService didReceiveData:receivedData];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -208,9 +196,9 @@
 		return;
 	}
 	
-	[self.responseProcessor didFinishReceivingData];
+	[self.dataService didFinishReceivingData];
 	
-	if (self.responseProcessor.error) {
+	if (self.dataService.error) {
 		[self didFail];
 	}else {
 		[self didFinish];
@@ -219,7 +207,7 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	[self.responseProcessor didFailReceivingDataWithError:error];
+	[self.dataService didFailReceivingDataWithError:error];
 	[self didFail];
 }
 

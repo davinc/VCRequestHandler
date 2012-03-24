@@ -27,22 +27,13 @@
 #import <Foundation/Foundation.h>
 
 @class VCRequest;
-@class VCResponseProcessor;
+@class VCDataService;
 
 @protocol VCRequestDelegate;
 
 @interface VCRequestFactory : NSObject
 
 + (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
-							   URL:(NSURL *)URL
-							 cache:(NSURLRequestCachePolicy)cache
-				 responseProcessor:(VCResponseProcessor *)processor;
+					   dataService:(VCDataService *)service;
 
-+ (VCRequest *)requestWithObserver:(NSObject<VCRequestDelegate> *)observer
-							method:(NSString *)method
-							   URL:(NSURL *)URL
-				   allHeaderFields:(NSDictionary *)allHeaderFields
-							  body:(NSData *)body
-							 cache:(NSURLRequestCachePolicy)cache
-				 responseProcessor:(VCResponseProcessor *)processor;
 @end

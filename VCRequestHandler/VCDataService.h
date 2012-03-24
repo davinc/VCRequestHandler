@@ -1,8 +1,8 @@
 //
-//  DemoAppDelegate.h
-//  Demo
+//  VCDataService.h
+//  VCRequestHandler
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 4/7/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -24,18 +24,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+/*
+ * For any custom implementation, extend this class and override any required methods.
+ * 
+ * Methods that can be extended at the moment,
+ *
+ * - (NSURL *)URL;
+ * - (VCRequestMethod)method;
+ * - (void)willStartReceivingData;
+ * - (void)didReceiveData:(NSData*)data;
+ * - (void)didFinishReceivingData;
+ * - (void)didFailReceivingDataWithError:(NSError *)error;
+ *
+ */
 
-#import "VCRequestHandler.h"
+#import <Foundation/Foundation.h>
+#import "VCRequestSource.h"
+#import "VCResponseProcessor.h"
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate, VCRequestDelegate> {	
-	UITextView *_responseTextView;
-	UIImageView *_responseImageView;
+@interface VCDataService : NSObject <VCRequestSource, VCResponseProcessor> {
+	NSMutableData *_data;
+	NSError *_error;
+	
+	// For download progress
+	long long expectedDataLength;
+	long long receivedDataLength;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UIImageView *responseImageView;
+@property (nonatomic, readonly) NSData *data;        // Received data
+@property (nonatomic, retain) NSError *error;        // error is nil if the request completes with success, else holds an error that occured during the process.
+@property (nonatomic, assign) long long expectedDataLength;
+@property (nonatomic, assign) long long receivedDataLength;
 
-- (IBAction)didTapGetRemoteImageResponseButton:(id)sender;
-- (IBAction)didTapGetLocalImageResponseButton:(id)sender;
 @end
