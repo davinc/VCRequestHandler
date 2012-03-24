@@ -31,6 +31,10 @@
  *
  * - (NSURL *)URL;
  * - (VCRequestMethod)method;
+ * - (NSURLRequestCachePolicy)cachePolicy;
+ * - (NSDictionary *)allHTTPHeaderFields;
+ * - (NSData *)body;
+ *
  * - (void)willStartReceivingData;
  * - (void)didReceiveData:(NSData*)data;
  * - (void)didFinishReceivingData;

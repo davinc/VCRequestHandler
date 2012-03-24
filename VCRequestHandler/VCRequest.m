@@ -68,16 +68,18 @@
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.dataService URL]
 														   cachePolicy:[self.dataService cachePolicy]
 													   timeoutInterval:30];
+		
+	switch ([self.dataService method]) {
+		case VCGETRequest:
+			[request setHTTPMethod:@"GET"];
+			break;
+		case VCPOSTRequest:
+			[request setHTTPMethod:@"POST"];
+			break;
+	}
 	
-//	if (self.method) {
-//		[request setHTTPMethod:[self.responseProcessor method]];
-//	}
-//	if (self.allHTTPHeaderFields) {
-//		[request setAllHTTPHeaderFields:self.allHTTPHeaderFields];
-//	}
-//	if (self.body) {
-//		[request setHTTPBody:self.body];
-//	}
+	[request setAllHTTPHeaderFields:[self.dataService allHTTPHeaderFields]];
+	[request setHTTPBody:[self.dataService body]];
 	
 	NSURLConnection *connection = [NSURLConnection connectionWithRequest:request
 																delegate:self];
