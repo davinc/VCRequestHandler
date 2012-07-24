@@ -30,6 +30,7 @@
 @class VCDataService;
 
 @interface VCRequest : NSOperation <NSURLConnectionDelegate> {
+	NSURLConnection *_connection;
 	NSObject<VCRequestDelegate> *_delegate;
 	VCDataService *_dataService;
 	

@@ -46,6 +46,8 @@
 
 - (void)dealloc
 {
+	_delegate = nil;
+	[_connection release], _connection = nil;
 	[_dataService release], _dataService = nil;
 	[super dealloc];
 }
@@ -81,9 +83,9 @@
 	[request setAllHTTPHeaderFields:[self.dataService allHTTPHeaderFields]];
 	[request setHTTPBody:[self.dataService body]];
 	
-	NSURLConnection *connection = [NSURLConnection connectionWithRequest:request
-																delegate:self];
-	[connection start];
+	_connection = [[NSURLConnection connectionWithRequest:request
+												 delegate:self] retain];
+	[_connection start];
 	
 	do {
 		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
@@ -153,10 +155,11 @@
 - (void)cancel
 {
 	self.delegate = nil;
+	[_connection cancel];
 	[super cancel];
 }
 
-#pragma mark - NSOperationDelegate Methods
+#pragma mark - NSURLConnectionDelegate Methods
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
 {

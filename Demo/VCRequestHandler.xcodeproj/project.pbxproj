@@ -42,13 +42,13 @@
 		456520F81480BB4C00FC6B4B /* VCRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestDelegate.h; sourceTree = "<group>"; };
 		456520F91480BB4C00FC6B4B /* VCRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCRequestHandler.h; sourceTree = "<group>"; };
 		456520FA1480BB4C00FC6B4B /* VCRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCRequestHandler.m; sourceTree = "<group>"; };
-		456520FB1480BB4C00FC6B4B /* VCDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; path = VCDataService.h; sourceTree = "<group>"; };
+		456520FB1480BB4C00FC6B4B /* VCDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataService.h; sourceTree = "<group>"; };
 		456520FC1480BB4C00FC6B4B /* VCDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataService.m; sourceTree = "<group>"; };
 		457AEBE613D5C190008A5583 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		45A32D5E151DB2B4003220C0 /* VCResponseProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCResponseProcessor.h; sourceTree = "<group>"; };
 		45A32D5F151DB2C6003220C0 /* VCRequestSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCRequestSource.h; sourceTree = "<group>"; };
 		45C7A37514C84CF600A5EACD /* localImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = localImage.jpg; sourceTree = "<group>"; };
-		45E41EFC13C77B1B0065B768 /* VCImageService.h */ = {isa = PBXFileReference; fileEncoding = 4; path = VCImageService.h; sourceTree = "<group>"; };
+		45E41EFC13C77B1B0065B768 /* VCImageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageService.h; sourceTree = "<group>"; };
 		45E41EFD13C77B1B0065B768 /* VCImageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -280,6 +280,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -295,6 +296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/VCRequestHandler-Prefix.pch";
