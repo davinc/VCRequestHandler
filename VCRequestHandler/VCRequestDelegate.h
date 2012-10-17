@@ -35,6 +35,8 @@
 - (void)didFinishRequest:(VCRequest *)request;
 
 @optional
+- (void)willBeginRequest:(VCRequest *)request;
+- (void)didProgressRequest:(VCRequest *)request;
 - (void)didFailRequest:(VCRequest *)request;
 
 @end

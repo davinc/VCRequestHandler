@@ -49,15 +49,9 @@
 @interface VCDataService : NSObject <VCRequestSource, VCResponseProcessor> {
 	NSMutableData *_data;
 	NSError *_error;
-	
-	// For download progress
-	long long expectedDataLength;
-	long long receivedDataLength;
 }
 
 @property (nonatomic, readonly) NSData *data;        // Received data
 @property (nonatomic, retain) NSError *error;        // error is nil if the request completes with success, else holds an error that occured during the process.
-@property (nonatomic, assign) long long expectedDataLength;
-@property (nonatomic, assign) long long receivedDataLength;
 
 @end

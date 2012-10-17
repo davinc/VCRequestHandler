@@ -33,6 +33,8 @@
 @synthesize delegate = _delegate;
 @synthesize dataService = _dataService;
 @synthesize tag = _tag;
+@synthesize expectedDataLength = _expectedDataLength;
+@synthesize receivedDataLength = _receivedDataLength;
 
 - (id)initWithService:(VCDataService *)service
 {
@@ -86,7 +88,14 @@
 	_connection = [[NSURLConnection connectionWithRequest:request
 												 delegate:self] retain];
 	[_connection start];
-	
+
+	if ([self.delegate respondsToSelector:@selector(willBeginRequest:)])
+	{
+		[self.delegate performSelectorOnMainThread:@selector(willBeginRequest:)
+										withObject:self
+									 waitUntilDone:NO];
+	}
+
 	do {
 		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
 	} while (_isExecuting);
@@ -97,28 +106,31 @@
 
 - (void)didFinish
 {
-	if ([self.delegate respondsToSelector:@selector(didFinishRequest:)]) 
-	{
-		[self.delegate performSelectorOnMainThread:@selector(didFinishRequest:)
-										withObject:self
-									 waitUntilDone:NO];
-	}
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if ([self.delegate respondsToSelector:@selector(didFinishRequest:)])
+		{
+			[self.delegate didFinishRequest:self];
+		}
+	});
 	[self notifyFinish];
 }
 
 - (void)didFail
 {
-	if ([self.delegate respondsToSelector:@selector(didFailRequest:)])
-	{
-		[self.delegate performSelectorOnMainThread:@selector(didFailRequest:)
-										withObject:self
-									 waitUntilDone:NO];
-	}
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if ([self.delegate respondsToSelector:@selector(didFailRequest:)])
+		{
+			[self.delegate didFailRequest:self];
+		}
+	});
 	[self notifyFinish];
 }
 
 - (void)notifyStart 
 {
+	_receivedDataLength = 0;
+	_expectedDataLength = 0;
+
 	[self willChangeValueForKey:@"isExecuting"];
 	_isExecuting = YES;
 	_isFinished = NO;
@@ -177,7 +189,7 @@
 		[self didFail];
 		return;
 	}
-	self.dataService.expectedDataLength = [response expectedContentLength];
+	self.expectedDataLength = [response expectedContentLength];
 	[self.dataService willStartReceivingData];
 }
 
@@ -189,8 +201,14 @@
 		return;
 	}
 	
-	self.dataService.receivedDataLength += [receivedData length];
+	self.receivedDataLength += [receivedData length];
 	[self.dataService didReceiveData:receivedData];
+
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if ([self.delegate respondsToSelector:@selector(didProgressRequest:)]) {
+			[self.delegate didProgressRequest:self];
+		}
+	});
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection

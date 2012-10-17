@@ -29,13 +29,17 @@
 
 @class VCDataService;
 
-@interface VCRequest : NSOperation <NSURLConnectionDelegate> {
+@interface VCRequest : NSOperation <NSURLConnectionDataDelegate> {
 	NSURLConnection *_connection;
 	NSObject<VCRequestDelegate> *_delegate;
 	VCDataService *_dataService;
 	
 	BOOL _isExecuting;
 	BOOL _isFinished;
+
+	// For download progress
+	long long _expectedDataLength;
+	long long _receivedDataLength;
 }
 
 - (id)initWithService:(VCDataService *)service;
@@ -43,6 +47,8 @@
 @property (nonatomic, assign) NSObject<VCRequestDelegate> *delegate;
 @property (nonatomic, retain) VCDataService *dataService;
 @property (nonatomic, assign) NSInteger tag;
+@property (nonatomic, assign) long long expectedDataLength;
+@property (nonatomic, assign) long long receivedDataLength;
 
 - (void)didFinish;
 - (void)didFail;

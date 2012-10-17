@@ -29,7 +29,6 @@
 @implementation VCDataService
 
 @synthesize data = _data, error = _error;
-@synthesize expectedDataLength, receivedDataLength;
 
 - (id)init
 {
