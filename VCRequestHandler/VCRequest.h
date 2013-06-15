@@ -36,6 +36,7 @@
 	
 	BOOL _isExecuting;
 	BOOL _isFinished;
+	BOOL _isStarted;
 
 	// For download progress
 	long long _expectedDataLength;

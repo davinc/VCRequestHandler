@@ -42,6 +42,9 @@
 	if (self) {
 		self.delegate = nil;
 		self.dataService = service;
+		_isStarted = NO;
+		_isExecuting = NO;
+		_isFinished = NO;
 	}
 	return self;
 }
@@ -60,8 +63,9 @@
 		[self notifyFinish];
 		return;
 	}
-	
-	if ([self.dataService URL] == nil) {
+
+	NSURL *url = [self.dataService URL];
+	if (url == nil) {
 		[self notifyFinish];
 		return;	
 	}
@@ -69,7 +73,7 @@
 	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
 	[self notifyStart];
 	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.dataService URL]
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 														   cachePolicy:[self.dataService cachePolicy]
 													   timeoutInterval:30];
 		
@@ -134,11 +138,14 @@
 	[self willChangeValueForKey:@"isExecuting"];
 	_isExecuting = YES;
 	_isFinished = NO;
+	_isStarted = YES;
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
 - (void)notifyFinish 
 {
+	if (!_isStarted) return;
+	
 	[self willChangeValueForKey:@"isExecuting"];
 	[self willChangeValueForKey:@"isFinished"];
 	_isExecuting = NO;
@@ -168,7 +175,7 @@
 {
 	self.delegate = nil;
 	[_connection cancel];
-	[super cancel];
+	[self notifyFinish];
 }
 
 #pragma mark - NSURLConnectionDelegate Methods
