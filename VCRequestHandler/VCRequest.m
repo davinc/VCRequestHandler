@@ -173,8 +173,10 @@
 
 - (void)cancel
 {
+	[self willChangeValueForKey:@"isCancelled"];
 	self.delegate = nil;
 	[_connection cancel];
+	[self didChangeValueForKey:@"isCancelled"];
 	[self notifyFinish];
 }
 
