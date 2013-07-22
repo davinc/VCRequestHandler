@@ -85,8 +85,13 @@
 - (void)showNetworkActivityIndicator
 {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	
-	[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired) withObject:nil afterDelay:1.0];
+
+	[NSObject cancelPreviousPerformRequestsWithTarget:self
+											 selector:@selector(hideNetworkActivityIndicatorIfRequired)
+											   object:nil];
+	[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired)
+			   withObject:nil
+			   afterDelay:1.0];
 }
 
 - (void)hideNetworkActivityIndicatorIfRequired
@@ -94,7 +99,12 @@
 	if ([_networkOperationQueue operationCount] == 0) {
 		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 	}else {
-		[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired) withObject:nil afterDelay:1.0];
+		[NSObject cancelPreviousPerformRequestsWithTarget:self
+												 selector:@selector(hideNetworkActivityIndicatorIfRequired)
+												   object:nil];
+		[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired)
+				   withObject:nil
+				   afterDelay:1.0];
 	}
 }
 

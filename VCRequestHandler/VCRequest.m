@@ -3,7 +3,7 @@
 //  VCRequestHandler
 //
 //  Created by Vinay Chavan on 04/09/11.
-//  
+//
 //  Copyright (C) 2011 by Vinay Chavan
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -11,11 +11,11 @@
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions: 
+//  furnished to do so, subject to the following conditions:
 //
 //  The above copyright notice and this permission notice shall be included in
 //  all copies or substantial portions of the Software.
-// 
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,9 +42,10 @@
 	if (self) {
 		self.delegate = nil;
 		self.dataService = service;
-		_isStarted = NO;
+
 		_isExecuting = NO;
 		_isFinished = NO;
+		_isCancelled = NO;
 	}
 	return self;
 }
@@ -59,24 +60,25 @@
 
 - (void)start
 {
-	if (self.isCancelled) {
+	if ([self isCancelled]) {
 		[self notifyFinish];
 		return;
 	}
 
 	NSURL *url = [self.dataService URL];
 	if (url == nil) {
+		[self cancel];
 		[self notifyFinish];
-		return;	
+		return;
 	}
-	
-	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
+
 	[self notifyStart];
-	
+
+	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 														   cachePolicy:[self.dataService cachePolicy]
 													   timeoutInterval:30];
-		
+
 	switch ([self.dataService method]) {
 		case VCGETRequest:
 			[request setHTTPMethod:@"GET"];
@@ -85,10 +87,10 @@
 			[request setHTTPMethod:@"POST"];
 			break;
 	}
-	
+
 	[request setAllHTTPHeaderFields:[self.dataService allHTTPHeaderFields]];
 	[request setHTTPBody:[self.dataService body]];
-	
+
 	_connection = [[NSURLConnection connectionWithRequest:request
 												 delegate:self] retain];
 	[_connection start];
@@ -130,22 +132,18 @@
 	[self notifyFinish];
 }
 
-- (void)notifyStart 
+- (void)notifyStart
 {
 	_receivedDataLength = 0;
 	_expectedDataLength = 0;
 
 	[self willChangeValueForKey:@"isExecuting"];
 	_isExecuting = YES;
-	_isFinished = NO;
-	_isStarted = YES;
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
-- (void)notifyFinish 
+- (void)notifyFinish
 {
-	if (!_isStarted) return;
-	
 	[self willChangeValueForKey:@"isExecuting"];
 	[self willChangeValueForKey:@"isFinished"];
 	_isExecuting = NO;
@@ -171,13 +169,19 @@
 	return _isFinished;
 }
 
+- (BOOL)isCancelled
+{
+	return _isCancelled;
+}
+
 - (void)cancel
 {
 	[self willChangeValueForKey:@"isCancelled"];
 	self.delegate = nil;
-	[_connection cancel];
+	_isCancelled = YES;
 	[self didChangeValueForKey:@"isCancelled"];
-	[self notifyFinish];
+
+	DebugLog(@"Cancelled");
 }
 
 #pragma mark - NSURLConnectionDelegate Methods
@@ -193,23 +197,24 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	if (self.isCancelled) {
+	if ([self isCancelled]) {
 		[connection cancel];
-		[self didFail];
+		[self notifyFinish];
 		return;
 	}
+
 	self.expectedDataLength = [response expectedContentLength];
 	[self.dataService willStartReceivingData];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)receivedData
 {
-	if (self.isCancelled) {
+	if ([self isCancelled]) {
 		[connection cancel];
-		[self didFail];
+		[self notifyFinish];
 		return;
 	}
-	
+
 	self.receivedDataLength += [receivedData length];
 	[self.dataService didReceiveData:receivedData];
 
@@ -222,14 +227,14 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	if (self.isCancelled) {
+	if ([self isCancelled]) {
 		[connection cancel];
-		[self didFail];
+		[self notifyFinish];
 		return;
 	}
-	
+
 	[self.dataService didFinishReceivingData];
-	
+
 	if (self.dataService.error) {
 		[self didFail];
 	}else {
