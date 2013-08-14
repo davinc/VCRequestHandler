@@ -3,7 +3,7 @@
 //  Demo
 //
 //  Created by Vinay Chavan on 15/06/11.
-//  
+//
 //  Copyright (C) 2011 by Vinay Chavan
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -11,11 +11,11 @@
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions: 
+//  furnished to do so, subject to the following conditions:
 //
 //  The above copyright notice and this permission notice shall be included in
 //  all copies or substantial portions of the Software.
-// 
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -54,7 +54,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	/*
-	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 	 If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 	 */
 }
@@ -98,19 +98,21 @@
 
 - (IBAction)didTapGetRemoteImageResponseButton:(UIButton*)sender {
 	self.responseImageView.image = nil;
-		
-	VCRequest *request = [VCRequestFactory requestWithObserver:self 
-												   dataService:[[[VCImageService alloc] initWithURL:[NSURL URLWithString:@"http://davinccoder.files.wordpress.com/2011/11/img_0194.jpg"]] autorelease]];
-	request.tag = 2;
+
+	VCImageService *imageService = [[VCImageService alloc] initWithURL:[NSURL URLWithString:@"http://31.media.tumblr.com/tumblr_lsn0tlFL161qz6pqio1_500.png"]];
+	VCRequest *request = [VCRequestFactory requestWithObserver:self
+												   dataService:imageService];
+	[imageService release], imageService = nil;
 	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
 
 - (IBAction)didTapGetLocalImageResponseButton:(UIButton*)sender {
 	self.responseImageView.image = nil;
-	
-	VCRequest *request = [VCRequestFactory requestWithObserver:self 
-												   dataService:[[[VCImageService alloc] initWithURL:[[NSBundle mainBundle] URLForResource:@"localImage" withExtension:@"jpg"]] autorelease]];
-	request.tag = 2;
+
+	VCImageService *imageService = [[VCImageService alloc] initWithURL:[[NSBundle mainBundle] URLForResource:@"localImage" withExtension:@"jpg"]];
+	VCRequest *request = [VCRequestFactory requestWithObserver:self
+												   dataService:imageService];
+	[imageService release], imageService = nil;
 	[[VCRequestHandler sharedHandler] requestWithRequest:request];
 }
 
@@ -119,10 +121,8 @@
 
 - (void)didFinishRequest:(VCRequest *)request
 {
-	if(request.tag == 2) {
-		VCImageService *processor = (VCImageService *)request.dataService;
-		self.responseImageView.image = processor.image;
-	}
+	VCImageService *processor = (VCImageService *)request.dataService;
+	self.responseImageView.image = processor.image;
 }
 
 - (void)didFailRequest:(VCRequest *)request
