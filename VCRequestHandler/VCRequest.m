@@ -180,8 +180,6 @@
 	self.delegate = nil;
 	_isCancelled = YES;
 	[self didChangeValueForKey:@"isCancelled"];
-
-	DebugLog(@"Cancelled");
 }
 
 #pragma mark - NSURLConnectionDelegate Methods

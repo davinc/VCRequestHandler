@@ -78,6 +78,8 @@
 
 - (void)addOperation:(VCRequest *)operation
 {
+	__block typeof(self) handler = self;
+	operation.completionBlock = ^{[handler hideNetworkActivityIndicatorIfRequired];};
 	[_networkOperationQueue addOperation:operation];
 	[self showNetworkActivityIndicator];
 }
@@ -85,26 +87,12 @@
 - (void)showNetworkActivityIndicator
 {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-
-	[NSObject cancelPreviousPerformRequestsWithTarget:self
-											 selector:@selector(hideNetworkActivityIndicatorIfRequired)
-											   object:nil];
-	[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired)
-			   withObject:nil
-			   afterDelay:1.0];
 }
 
 - (void)hideNetworkActivityIndicatorIfRequired
 {
 	if ([_networkOperationQueue operationCount] == 0) {
 		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	}else {
-		[NSObject cancelPreviousPerformRequestsWithTarget:self
-												 selector:@selector(hideNetworkActivityIndicatorIfRequired)
-												   object:nil];
-		[self performSelector:@selector(hideNetworkActivityIndicatorIfRequired)
-				   withObject:nil
-				   afterDelay:1.0];
 	}
 }
 
