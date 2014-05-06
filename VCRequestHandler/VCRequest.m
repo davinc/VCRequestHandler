@@ -74,38 +74,38 @@
 
 	[self notifyStart];
 
-	NSAutoreleasePool *autoreleasePool = [[NSAutoreleasePool alloc] init];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-														   cachePolicy:[self.dataService cachePolicy]
-													   timeoutInterval:30];
+	@autoreleasepool {
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+															   cachePolicy:[self.dataService cachePolicy]
+														   timeoutInterval:30];
 
-	switch ([self.dataService method]) {
-		case VCGETRequest:
-			[request setHTTPMethod:@"GET"];
-			break;
-		case VCPOSTRequest:
-			[request setHTTPMethod:@"POST"];
-			break;
+		switch ([self.dataService method]) {
+			case VCGETRequest:
+				[request setHTTPMethod:@"GET"];
+				break;
+			case VCPOSTRequest:
+				[request setHTTPMethod:@"POST"];
+				break;
+		}
+
+		[request setAllHTTPHeaderFields:[self.dataService allHTTPHeaderFields]];
+		[request setHTTPBody:[self.dataService body]];
+
+		_connection = [[NSURLConnection connectionWithRequest:request
+													 delegate:self] retain];
+		[_connection start];
+
+		if ([self.delegate respondsToSelector:@selector(willBeginRequest:)])
+		{
+			[self.delegate performSelectorOnMainThread:@selector(willBeginRequest:)
+											withObject:self
+										 waitUntilDone:NO];
+		}
+
+		do {
+			[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
+		} while (_isExecuting);
 	}
-
-	[request setAllHTTPHeaderFields:[self.dataService allHTTPHeaderFields]];
-	[request setHTTPBody:[self.dataService body]];
-
-	_connection = [[NSURLConnection connectionWithRequest:request
-												 delegate:self] retain];
-	[_connection start];
-
-	if ([self.delegate respondsToSelector:@selector(willBeginRequest:)])
-	{
-		[self.delegate performSelectorOnMainThread:@selector(willBeginRequest:)
-										withObject:self
-									 waitUntilDone:NO];
-	}
-
-	do {
-		[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
-	} while (_isExecuting);
-	[autoreleasePool release], autoreleasePool = nil;
 }
 
 #pragma mark - Private Methods
