@@ -51,9 +51,4 @@
 @property (nonatomic, assign) long long expectedDataLength;
 @property (nonatomic, assign) long long receivedDataLength;
 
-- (void)didFinish;
-- (void)didFail;
-- (void)notifyStart;
-- (void)notifyFinish;
-
 @end

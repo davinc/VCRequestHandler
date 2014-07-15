@@ -37,7 +37,9 @@
     NSOperationQueue *_networkOperationQueue;
 }
 
-+ (VCRequestHandler*)sharedHandler;
++ (VCRequestHandler*)sharedInstance;
+
+- (void)setMaxConcurrentRequestCount:(NSInteger)count;
 
 - (void)requestWithRequest:(VCRequest *)request;
 

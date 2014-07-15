@@ -1,9 +1,9 @@
 //
-//  VCRequestDelegate.h
+//  VCFormDataService.h
 //  VCRequestHandler
 //
-//  Created by Vinay Chavan on 4/11/11.
-//  
+//  Created by Vinay Chavan on 15/07/14.
+//
 //  Copyright (C) 2011 by Vinay Chavan
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -11,11 +11,11 @@
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions: 
+//  furnished to do so, subject to the following conditions:
 //
 //  The above copyright notice and this permission notice shall be included in
 //  all copies or substantial portions of the Software.
-// 
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,19 +24,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "VCDataService.h"
 
-@class VCRequest;
-@class VCDataService;
+@interface VCFormDataService : VCDataService
+{
+@private
+	NSDictionary *_formData;
+}
 
-@protocol VCRequestDelegate <NSObject>
+@property (nonatomic, retain) NSDictionary * formData;
 
-@required
-- (void)didFinishRequest:(VCRequest *)request;
-- (void)didFailRequest:(VCRequest *)request;
-
-@optional
-- (void)willBeginRequest:(VCRequest *)request;
-- (void)didProgressRequest:(VCRequest *)request;
+- (id)initWithFormData:(NSDictionary *)aFormData;
 
 @end

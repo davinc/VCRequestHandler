@@ -103,7 +103,7 @@
 	VCRequest *request = [VCRequestFactory requestWithObserver:self
 												   dataService:imageService];
 	[imageService release], imageService = nil;
-	[[VCRequestHandler sharedHandler] requestWithRequest:request];
+	[[VCRequestHandler sharedInstance] requestWithRequest:request];
 }
 
 - (IBAction)didTapGetLocalImageResponseButton:(UIButton*)sender {
@@ -113,7 +113,7 @@
 	VCRequest *request = [VCRequestFactory requestWithObserver:self
 												   dataService:imageService];
 	[imageService release], imageService = nil;
-	[[VCRequestHandler sharedHandler] requestWithRequest:request];
+	[[VCRequestHandler sharedInstance] requestWithRequest:request];
 }
 
 

@@ -28,6 +28,17 @@
 
 #import "VCDataService.h"
 
+
+@interface VCRequest ()
+
+- (void)didFinish;
+- (void)didFail;
+- (void)notifyStart;
+- (void)notifyFinish;
+
+@end
+
+
 @implementation VCRequest
 
 @synthesize delegate = _delegate;
@@ -78,16 +89,8 @@
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 															   cachePolicy:[self.dataService cachePolicy]
 														   timeoutInterval:30];
-
-		switch ([self.dataService method]) {
-			case VCGETRequest:
-				[request setHTTPMethod:@"GET"];
-				break;
-			case VCPOSTRequest:
-				[request setHTTPMethod:@"POST"];
-				break;
-		}
-
+		
+		[request setHTTPMethod:[self HTTPMethodForRequestMethod:[self.dataService method]]];
 		[request setAllHTTPHeaderFields:[self.dataService allHTTPHeaderFields]];
 		[request setHTTPBody:[self.dataService body]];
 
@@ -95,20 +98,38 @@
 													 delegate:self] retain];
 		[_connection start];
 
-		if ([self.delegate respondsToSelector:@selector(willBeginRequest:)])
-		{
-			[self.delegate performSelectorOnMainThread:@selector(willBeginRequest:)
-											withObject:self
-										 waitUntilDone:NO];
-		}
-
+		[self willBegin];
+		
 		do {
 			[[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
 		} while (_isExecuting);
 	}
 }
 
+
 #pragma mark - Private Methods
+
+- (NSString *)HTTPMethodForRequestMethod:(VCRequestMethod)method
+{
+	if (method == VCGETRequest) {
+		return @"GET";
+	}else if (method == VCPOSTRequest) {
+		return @"POST";
+	}
+	
+	// return GET by default
+	return @"GET";
+}
+
+- (void)willBegin
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if ([self.delegate respondsToSelector:@selector(willBeginRequest:)])
+		{
+			[self.delegate willBeginRequest:self];
+		}
+	});
+}
 
 - (void)didFinish
 {
@@ -152,6 +173,7 @@
 	[self didChangeValueForKey:@"isExecuting"];
 }
 
+
 #pragma mark Overriden
 
 - (BOOL)isConcurrent
@@ -181,6 +203,7 @@
 	_isCancelled = YES;
 	[self didChangeValueForKey:@"isCancelled"];
 }
+
 
 #pragma mark - NSURLConnectionDelegate Methods
 

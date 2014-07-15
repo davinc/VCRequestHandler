@@ -53,19 +53,24 @@
 	[super dealloc];
 }
 
-+ (VCRequestHandler*)sharedHandler 
++ (VCRequestHandler*)sharedInstance 
 {
-	static VCRequestHandler *sharedInstance = nil;
+	static dispatch_once_t once;
+    static VCRequestHandler *sharedInstance;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
+    });
 	
-	if (sharedInstance == nil) 
-	{
-		sharedInstance = [[VCRequestHandler alloc] init];
-	}
-	
-	return sharedInstance;
+    return sharedInstance;
 }
 
+
 #pragma mark - Public
+
+- (void)setMaxConcurrentRequestCount:(NSInteger)count
+{
+	[_networkOperationQueue setMaxConcurrentOperationCount:count];
+}
 
 - (void)requestWithRequest:(VCRequest *)request
 {
@@ -74,12 +79,15 @@
 	}
 }
 
+
 #pragma mark - Private
 
 - (void)addOperation:(VCRequest *)operation
 {
 	__block typeof(self) handler = self;
-	operation.completionBlock = ^{[handler hideNetworkActivityIndicatorIfRequired];};
+	operation.completionBlock = ^{
+		[handler hideNetworkActivityIndicatorIfRequired];
+	};
 	[_networkOperationQueue addOperation:operation];
 	[self showNetworkActivityIndicator];
 }
